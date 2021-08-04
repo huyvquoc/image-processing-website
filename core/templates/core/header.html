@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <script>
+        var homepage_url = "https://royal-loon-07066.herokuapp.com/";
+        window.onload = function() {
+            document.getElementById("image-page-upload").action = homepage_url + "upload";
+            document.getElementById("image-page-removebackground").action = homepage_url + "removebackground";
+            console.log(window.location.href)
+            console.log(homepage_url)
+            console.log(window.location.href == homepage_url)
+            console.log(window.location.href.indexOf(homepage_url))
+            // if (window.location.href.indexOf(homepage_url) > -1) {
+            if (window.location.href == homepage_url) {
+                document.getElementById("image-page-upload").style.display = "block";
+                document.getElementById("image-page-removebackground").style.display = "block";
+            }else {
+                document.getElementById("image-page-upload").style.display = "none";
+                document.getElementById("image-page-removebackground").style.display = "none";
+            }
+        }
+    </script>
+    <head>
+        <title>Homepage</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+        <header class="page-header">
+          <div class="container">
+              <h1><a href="/">Homepage</a></h1>
+          </div>
+        </header>
+
+        <main class="container">
+            <!-- <h1>Hello</h1> -->
+            {% block content %}
+            {% endblock %}
+
+            <!--Navbar-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <!-- <a class="navbar-brand">Navbar</a> -->
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> -->
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Welcome, {{ user.username }}</a>
+                        </li>
+
+                        {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            
+            <form action="" id="image-page-upload">
+                <input type="submit" value="Upload images" />
+            </form>
+            <br>
+            <form action="" id="image-page-removebackground">
+                <input type="submit" value="Remove background" />
+            </form>
+            <br>
+
+            <!-- Display messages -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <p class="text-center">Want to update your profile? <a href="/update">Update</a></p>
+            {% endif %}
+
+        </main>
+    </body>
+</html>

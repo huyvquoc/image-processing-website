@@ -1,0 +1,21 @@
+{% load crispy_forms_tags %}
+
+<form id="post_form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for hidden in postForm.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+
+    {% for field in postForm %}
+        {{ field }} <br />
+    {% endfor %}
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Upload</button>
+</form>
+
+{% if img_obj %}
+    <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
+{% endif %}
