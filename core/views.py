@@ -252,6 +252,7 @@ def remove_background_image(
         form = ImageRemoveBackgroundForm(
             request.POST, 
             request.FILES)
+        # print('[+] form: ', form)
         if (form.is_valid()):
             # post_form = postForm.save(commit=False)
             # post_form.user = request.user
@@ -284,7 +285,7 @@ def remove_background_image(
                 {'form': form, 'img_obj': new_img_obj})
     else:
         form = ImageRemoveBackgroundForm()
-        
+
         return render(
             request, 
             'core/preprocess_image.html', 

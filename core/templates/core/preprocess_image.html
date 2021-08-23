@@ -1,21 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .process-image {
+                background-color: #2571c7d8;
+                border: none;
+                border-radius: 5px;
+                color: white;
+                padding: 10px 24px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            .process-image:hover {
+                background-color: #5083bed8;
+                color: white;
+            }
+            input[type="file"] {
+                display: none;
+            }
+            label[for="id_image"] {
+                background-color: rgb(59, 250, 84);
+                border: none;
+                border-radius: 4px;
+                color: white;
+                display: inline-block;
+                padding: 2px 2px;
+                cursor: pointer;
+            }
+            label[for="id_image"]:hover {
+                background-color: rgb(114, 248, 114);
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
 {% load crispy_forms_tags %}
 
 <form id="post_form" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+    <!-- {% csrf_token %}
     {% for hidden in postForm.hidden_fields %}
         {{ hidden }}
     {% endfor %}
 
     {% for field in postForm %}
         {{ field }} <br />
-    {% endfor %}
+    {% endfor %} -->
 
     {% csrf_token %}
+    <!-- Read this to know about form.as_p: https://docs.djangoproject.com/en/3.2/topics/forms/-->
     {{ form.as_p }}
 
-    <button type="submit">Upload</button>
+    <button class="process-image" type="submit">Process</button>
 </form>
 
 {% if img_obj %}
     <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
 {% endif %}
+    </body>
+</html>
