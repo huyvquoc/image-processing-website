@@ -197,6 +197,8 @@ def post(
 
         if (postForm.is_valid() and 
             formset.is_valid()):
+            # https://stackoverflow.com/questions/12848605/django-modelform-what-is-savecommit-false-used-for
+            # Read the link above to understand the 3 lines below
             post_form = postForm.save(commit=False)
             post_form.user = request.user # uncomment this line to require login
             post_form.save()

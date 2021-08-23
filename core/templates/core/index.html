@@ -12,13 +12,13 @@
 
 <form id="post_form" method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
-    {% for hidden in postForm.hidden_fields %}
+    <!-- {% for hidden in postForm.hidden_fields %}
         {{ hidden }}
     {% endfor %}
 
     {% for field in postForm %}
         {{ field }} <br />
-    {% endfor %}
+    {% endfor %} -->
 
     {{ formset.management_form }}
     {% for form in formset %}

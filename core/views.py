@@ -187,7 +187,6 @@ def post(
     print("[###] ImageFormSet, type(ImageFormSet): {0}, {1}".format(ImageFormSet, type(ImageFormSet)))
     
     if request.method == 'POST':
-        postForm = PostForm(request.POST)
         formset = ImageFormSet(
             request.POST, 
             request.FILES,
@@ -195,10 +194,7 @@ def post(
         for f in formset:
             form = f
 
-        if (postForm.is_valid() and 
-            formset.is_valid()):
-            # https://stackoverflow.com/questions/12848605/django-modelform-what-is-savecommit-false-used-for
-            # Read the link above to understand the 3 lines below
+        if (formset.is_valid()):
             # post_form = postForm.save(commit=False)
             # post_form.user = request.user # uncomment this line to require login
             # post_form.save()
@@ -238,28 +234,25 @@ def post(
             return render(
                 request, 
                 'core/index.html',
-                {'postForm': postForm, 'formset': formset, 'img_obj': photos})
+                {'formset': formset, 'img_obj': photos})
         else:
-            print("[+] {0}, {1}".format(postForm.errors, formset.errors))
+            print("[error] {0}".format(formset.errors))
     else:
-        postForm = PostForm()
         formset = ImageFormSet(queryset=Images.objects.none())
 
         return render(
             request, 
             'core/index.html',
-            {'postForm': postForm, 'formset': formset})
+            {'formset': formset})
 
 # @login_required # uncomment this line to require login before removing background
 def remove_background_image(
         request):
     if request.method == 'POST':
-        postForm = PostForm(request.POST)
         form = ImageRemoveBackgroundForm(
             request.POST, 
             request.FILES)
-        if (postForm.is_valid() and 
-            form.is_valid()):
+        if (form.is_valid()):
             # post_form = postForm.save(commit=False)
             # post_form.user = request.user
             # post_form.save()
@@ -288,11 +281,11 @@ def remove_background_image(
             return render(
                 request, 
                 'core/preprocess_image.html', 
-                {'postForm': postForm, 'form': form, 'img_obj': new_img_obj})
+                {'form': form, 'img_obj': new_img_obj})
     else:
-        postForm = PostForm(request.POST)
         form = ImageRemoveBackgroundForm()
-    return render(
-        request, 
-        'core/preprocess_image.html', 
-        {'postForm': postForm, 'form': form})
+        
+        return render(
+            request, 
+            'core/preprocess_image.html', 
+            {'form': form})
