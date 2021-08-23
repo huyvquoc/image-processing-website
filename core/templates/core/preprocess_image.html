@@ -89,6 +89,39 @@
                 }
             } */
 
+            .fadein img {
+                position: fixed;
+                /* top:0; */
+                -webkit-animation-name: fade;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-duration: 6s;
+                animation-name: fade;
+                animation-iteration-count: infinite;
+                animation-duration: 6s;
+            }
+
+            @-webkit-keyframes fade {
+                0% {opacity: 0;}
+                20% {opacity: 1;}
+                33% {opacity: 1;}
+                53% {opacity: 0;}
+                100% {opacity: 0;}
+            }
+            @keyframes fade {
+                0% {opacity: 0;}
+                20% {opacity: 1;}
+                33% {opacity: 1;}
+                53% {opacity: 0;}
+                100% {opacity: 0;}
+            }
+
+            #f1 {
+                background-color: lightblue;
+            }
+            #f2 {
+                -webkit-animation-delay: -4s;
+                background-color: yellow;
+            }
         </style>
     </head>
     <body>
@@ -104,12 +137,16 @@
 
         <div class="row">
             <div class="column">
-                <h2>Remove image background</h2>
-                <p>Lorem ipsum</p>
+                <!-- <h2>Remove image background</h2>
+                <p>Lorem ipsum</p> -->
+                <p class="fadein">
+                    <img id="f2" src="../../../static/dog6.jpg" style="width:700px;height:500px;">
+                    <img id="f1" src="../../../static/dog6_remove.jpg" style="width:700px;height:500px;">
+                </p>
             </div>
             <div class="column">
                 <h2>Remove image background</h2>
-                <p>Lorem ipsum</p>
+                <!-- <p>Lorem ipsum</p> -->
                 {% load crispy_forms_tags %}
 
                 <form id="post_form" method="post" enctype="multipart/form-data">
