@@ -155,7 +155,7 @@ def update_profile(
         'core/update_profile.html', 
         context={"update_form":form})
 
-@login_required
+# @login_required # uncomment this line to require login before uploading images
 def image_upload_view(
         request):
     if request.method == 'POST':
@@ -178,7 +178,7 @@ def image_upload_view(
         'core/index.html', 
         {'form': form})
 
-@login_required
+# @login_required # uncomment this line to require login before uploading images
 def post(
         request):
     ImageFormSet = modelformset_factory(Images,
@@ -197,9 +197,11 @@ def post(
 
         if (postForm.is_valid() and 
             formset.is_valid()):
-            post_form = postForm.save(commit=False)
-            post_form.user = request.user
-            post_form.save()
+            # https://stackoverflow.com/questions/12848605/django-modelform-what-is-savecommit-false-used-for
+            # Read the link above to understand the 3 lines below
+            # post_form = postForm.save(commit=False)
+            # post_form.user = request.user # uncomment this line to require login
+            # post_form.save()
 
             # print('[+] formset: ', dir(formset))
             # print('[+] formset.data: ', formset.data)
@@ -226,7 +228,7 @@ def post(
                 images = formset.files.getlist(key)
                 for img in images:
                     print("[+] type(img): {0}".format(type(img)))
-                    photo = Images(post=post_form, image=img)
+                    photo = Images(image=img)
                     print("[+] type(photo): {0}".format(type(photo)))
                     photos.append(photo)
                     photo.save()
@@ -248,7 +250,7 @@ def post(
             'core/index.html',
             {'postForm': postForm, 'formset': formset})
 
-@login_required
+# @login_required # uncomment this line to require login before removing background
 def remove_background_image(
         request):
     if request.method == 'POST':
@@ -258,9 +260,9 @@ def remove_background_image(
             request.FILES)
         if (postForm.is_valid() and 
             form.is_valid()):
-            post_form = postForm.save(commit=False)
-            post_form.user = request.user
-            post_form.save()
+            # post_form = postForm.save(commit=False)
+            # post_form.user = request.user
+            # post_form.save()
 
             form.save(1)
             blur = form.cleaned_data['blur']
@@ -280,9 +282,7 @@ def remove_background_image(
                 canny_thresh_1, canny_thresh_2, 
                 mask_dilate_iter, mask_erode_iter, 
                 (mask_color_b, mask_color_g, mask_color_r))
-            new_img_obj = Images(
-                post=post_form, 
-                image=new_img)
+            new_img_obj = Images(image=new_img)
             new_img_obj.save()
 
             return render(

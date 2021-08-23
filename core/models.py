@@ -45,10 +45,10 @@ def get_image_filename(
 
 class Images(
     models.Model):
-    post = models.ForeignKey(
-        Post, null=True, 
-        default=None,
-        on_delete=models.CASCADE)
+    # post = models.ForeignKey(
+    #     Post, null=True, 
+    #     default=None,
+    #     on_delete=models.CASCADE)
     # image = models.ImageField(upload_to=get_image_filename,
     #                           blank=True)
     image = models.ImageField(
