@@ -14,6 +14,9 @@ venv: ## Make a new virtual environment
 install: venv ## Make venv and install requirements
 	$(BIN)/pip install -r requirements.txt
 
+createsuperuser: ## Create Django superuser
+	$(PYTHON) manage.py createsuperuser	
+
 migrate: ## Make and run migrations
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate
