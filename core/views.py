@@ -252,7 +252,7 @@ def remove_background_image(
         form = ImageRemoveBackgroundForm(
             request.POST, 
             request.FILES)
-        # print('[+] form: ', form)
+        print('[+] form: ', form)
         if (form.is_valid()):
             # post_form = postForm.save(commit=False)
             # post_form.user = request.user
@@ -273,7 +273,7 @@ def remove_background_image(
             ori_img = img_obj.image
             new_img = remove_background(
                 ori_img, blur, 
-                canny_thresh_1, canny_thresh_2, 
+                canny_thresh_1, canny_thresh_2,
                 mask_dilate_iter, mask_erode_iter, 
                 (mask_color_b, mask_color_g, mask_color_r))
             new_img_obj = Images(image=new_img)

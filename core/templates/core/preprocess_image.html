@@ -21,6 +21,9 @@
                 background-color: #5083bed8;
                 color: white;
             }
+            .text-field {
+                display: none;
+            }
             input[type="file"] { 
                 display: none;
             }
@@ -36,6 +39,30 @@
             label[for="id_image"]:hover {
                 background-color: rgb(114, 248, 114);
                 color: white;
+            }
+            label[for="id_blur"] {
+                display: none;
+            }
+            label[for="id_canny_thresh_1"] {
+                display: none;
+            }
+            label[for="id_canny_thresh_2"] {
+                display: none;
+            }
+            label[for="id_mask_dilate_iter"] {
+                display: none;
+            }
+            label[for="id_mask_erode_iter"] {
+                display: none;
+            }
+            label[for="id_mask_color_b"] {
+                display: none;
+            }
+            label[for="id_mask_color_g"] {
+                display: none;
+            }
+            label[for="id_mask_color_r"] {
+                display: none;
             }
             /*Important for creating two-column layout*/
             * {
@@ -88,9 +115,17 @@
                     width: 100%;
                 }
             } */
+            p.fadein {
+                display: inline-block;
+                /* position: fixed; */
+                /* width: 400px;
+                height: 300px; */
+            }
 
             .fadein img {
-                position: fixed;
+                position: relative;
+                clear: both;
+                float: left;
                 /* top:0; */
                 -webkit-animation-name: fade;
                 -webkit-animation-iteration-count: infinite;
@@ -98,6 +133,23 @@
                 animation-name: fade;
                 animation-iteration-count: infinite;
                 animation-duration: 6s;
+            }
+            div.sample-demo-box {
+                display: inline-block;
+                /* width: 300px; */
+                border: 15px solid green;
+                padding: 50px;
+                margin: 20px;
+            }
+            #post_form {
+                position: relative;
+            }
+            div.upload-image-box {
+                display: inline-block;
+                /* width: 300px; */
+                border: 15px solid green;
+                padding: 50px;
+                margin: 20px;
             }
 
             @-webkit-keyframes fade {
@@ -139,33 +191,35 @@
             <div class="column">
                 <!-- <h2>Remove image background</h2>
                 <p>Lorem ipsum</p> -->
-                <p class="fadein">
-                    <img id="f2" src="../../../static/dog6.jpg" style="width:700px;height:500px;">
-                    <img id="f1" src="../../../static/dog6_remove.jpg" style="width:700px;height:500px;">
-                </p>
+                <div class="sample-demo-box">
+                    <p class="fadein">
+                        <img id="f2" src="../../../static/dog6.jpg" style="width:500px;height:300px;">
+                        <img id="f1" src="../../../static/dog6_remove.jpg" style="width:500px;height:300px;">
+                    </p>
+                </div>
             </div>
             <div class="column">
                 <h2>Remove image background</h2>
                 <!-- <p>Lorem ipsum</p> -->
                 {% load crispy_forms_tags %}
+                <div class="upload-image-box">
+                    <form id="post_form" method="post" enctype="multipart/form-data">
+                        <!-- {% csrf_token %}
+                        {% for hidden in postForm.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
 
-                <form id="post_form" method="post" enctype="multipart/form-data">
-                    <!-- {% csrf_token %}
-                    {% for hidden in postForm.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
+                        {% for field in postForm %}
+                            {{ field }} <br />
+                        {% endfor %} -->
 
-                    {% for field in postForm %}
-                        {{ field }} <br />
-                    {% endfor %} -->
+                        {% csrf_token %}
+                        <!-- Read this to know about form.as_p: https://docs.djangoproject.com/en/3.2/topics/forms/-->
+                        {{ form.as_p }}
 
-                    {% csrf_token %}
-                    <!-- Read this to know about form.as_p: https://docs.djangoproject.com/en/3.2/topics/forms/-->
-                    {{ form.as_p }}
-
-                    <button class="process-image" type="submit">Process</button>
-                </form>
-
+                        <button class="process-image" type="submit">Process</button>
+                    </form>
+                </div>
                 {% if img_obj %}
                     <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
                 {% endif %}
