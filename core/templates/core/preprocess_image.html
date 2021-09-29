@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
         <!-- <meta content="width=device-width, initial-scale=1" name="viewport" /> -->
         <style>
+            #company-logo {
+                position: relative;
+                left: 10px;
+                margin: 2px 0;
+                display: inline-block;
+            }
             .process-image {
                 position: relative;
                 left: 50%;
@@ -11,15 +19,15 @@
                 border: none;
                 border-radius: 5px;
                 color: white;
-                padding: 10px 24px;
+                padding: 2px 2px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
                 font-size: 18px;
-                margin: 4px 2px;
+                margin: 2px 2px;
                 transition-duration: 0.4s;
                 cursor: pointer;
-                font-family: "Papyrus", fantasy;
+                font-family: "Audiowide", sans-serif;
             }
             .process-image:hover {
                 background-color: #5083bed8;
@@ -40,10 +48,10 @@
                 border-radius: 4px;
                 color: white;
                 display: inline-block;
-                padding: 10px 5px;
+                padding: 3px 3px;
                 cursor: pointer;
                 font-size: 18px;
-                font-family: "Monaco", monospace;
+                font-family: "Trirong", serif;
             }
             label[for="id_image"]:hover {
                 background-color: rgb(114, 248, 114);
@@ -81,21 +89,108 @@
             body {
                 margin: 0;
             }
-
+            
+            /* Header */
             .header {
-                display: inline-block;
-                position: relative;
+                display: table-cell;
+                position: static;
                 height: 0px;
-                background-color: rgb(255, 253, 253);
+                width: 100vw;
+                background-color: rgba(246, 246, 253, 0.986);
+                border-style: groove;
                 padding: 0px;
+                margin: 0px;
                 text-align: left;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
             .header #text1 {
-                position: relative;
+                position: static;
                 left: 15px;
-                bottom: 20px;
+                bottom: 0px;
                 font-size: 8px;
+            }
+            .header-button-left {
+                position: relative;
+                left: 7%;
+                bottom: 25%;
+                transform: translateX(-100%);
+                background-color: white;
+                border-left-style: outset;
+                border-right-style: outset;
+                border-radius: 5px;
+                /* color: white; */
+                padding: 10px 24px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 18px;
+                margin: 2px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                font-family: Georgia, serif;
+            }
+            a.header-link-left {
+                color: black;
+                text-decoration: none;
+            }
+            a.header-link-left:hover {
+                color: rgb(60, 109, 245);
+            }
+            .header-button-right {
+                position: relative;
+                left: 65%;
+                bottom: 25%;
+                /* transform: translateX(-100%); */
+                background-color: white;
+                border-style: solid;
+                border-width: 1px;
+                border-radius: 3px;
+                /* color: white; */
+                padding: 10px 24px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 18px;
+                margin: 2px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                font-family: Georgia, serif;
+            }
+            .header-button-right#login-button {
+                background-color: rgba(255, 255, 168, 0.753);
+            }
+            .header-button-right#premium-button {
+                background-color: rgb(250, 151, 115);
+            }
+            .header-button-right#login-button:hover {
+                background-color: yellow;
+                /* display: none; */
+            }
+            .header-button-right#premium-button:hover {
+                background-color: orangered;
+                /* display: none; */
+            }
+            /* .header-button-right#login-button:hover:before {
+                content: "Login >";
+            }
+            .header-button-right#premium-button:hover:before {
+                content: "Premium >";
+            } */
+            a.header-link-right {
+                color: black;
+                text-decoration: none;
+            }
+
+            /* Footer */
+            .footer {
+                display: table-cell;
+                position: static;
+                width: 100vw;
+                padding: 10px;
+                text-align: center;
+                background-color: rgba(246, 246, 253, 0.986);
+                margin: 10px;
+                border-style: groove;
             }
 
             .top-nav {
@@ -214,19 +309,29 @@
                 -webkit-animation-delay: -4s;
                 background-color: yellow;
             }
+
         </style>
     </head>
     <body>
         <div class="header">
-            <img src="../../../static/willogy_logo.png" alt="image" style="width:70px;height:70px;" class="company-logo">
-            <h1 id="text1"> Willogy</h1>
+            <a id="company-logo" href="/removebackground">
+                <div>
+                    <img src="../../../static/willogy_logo.png" alt="image" style="width:70px;height:70px;">
+                    <!-- <p id="text1">Willogy</p> -->
+                </div>
+            </a>
+            <span class="header-button-left"><a class="header-link-left" href="#">About</a></span>
+            <span class="header-button-left"><a class="header-link-left" href="#">Demo</a></span>
+            <span class="header-button-left"><a class="header-link-left" href="#">Pricing</a></span>
+            <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
+            <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span>
         </div>
 
-        <div class="top-nav">
+        <!-- <div class="top-nav">
             <a href="#">About</a>
             <a href="#">Demo</a>
             <a href="#">Pricing</a>
-        </div>
+        </div> -->
 
         <div class="row">
             <div class="column">
@@ -269,6 +374,10 @@
                     <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
                 {% endif %}
             </div>
+        </div>
+
+        <div class="footer">
+            <h2>Footer</h2>
         </div>
     </body>
 </html>
