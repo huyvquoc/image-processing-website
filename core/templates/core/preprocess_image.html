@@ -138,21 +138,22 @@
             }
             .header-button-right {
                 position: relative;
-                left: 65%;
+                width: 6em;
+                left: 60%;
                 bottom: 25%;
                 /* transform: translateX(-100%); */
                 background-color: white;
                 border-style: solid;
                 border-width: 1px;
                 border-radius: 3px;
-                /* color: white; */
-                padding: 10px 24px;
+                color: black;
+                padding: 10px 4px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
                 font-size: 18px;
                 margin: 2px 2px;
-                transition-duration: 0.4s;
+                transition-duration: 0.8s;
                 cursor: pointer;
                 font-family: Georgia, serif;
             }
@@ -170,15 +171,49 @@
                 background-color: orangered;
                 /* display: none; */
             }
-            /* .header-button-right#login-button:hover:before {
-                content: "Login >";
+            /*Read more about opacity here*/
+            /*https://stackoverflow.com/questions/3331353/transitions-on-the-css-display-property*/
+            /*https://greywyvern.com/?post=337*/
+            .header-button-right > span {
+                /* transition-duration: inherit; */
+                /* visibility: visibility; */
+                opacity: 1;
+                transition: opacity 0.5s linear;
             }
-            .header-button-right#premium-button:hover:before {
-                content: "Premium >";
+            .header-button-right:hover > span {
+                /* display: none; */
+                /* visibility: hidden; */
+                opacity: 0.5;
+                /* display: none; */
+            }
+            /* .header-button-right:hover:before {
+                content: "Login >";
             } */
-            a.header-link-right {
-                color: black;
-                text-decoration: none;
+            /* Read more about transition in :before and :after*/
+            /*https://stackoverflow.com/questions/19579340/css-transition-after-a-pseudo-element-how-to-transition-content-that-shows-o/19579514*/
+            .header-button-right#login-button:after {
+                content:" >";
+                position: relative;
+                opacity: 0;
+                left: -5px;
+                -webkit-transition: all 0.6s;
+                transition: all 0.6s;
+            }
+            .header-button-right#premium-button:after {
+                content:" >";
+                position: relative;
+                opacity: 0;
+                left: -5px;
+                -webkit-transition: all 0.6s;
+                transition: all 0.6s;
+            }
+            .header-button-right#login-button:hover:after{
+                opacity: 1;
+                left: 0px;
+            }
+            .header-button-right#premium-button:hover:after{
+                opacity: 1;
+                left: 0px;
             }
 
             /* Footer */
@@ -323,8 +358,10 @@
             <span class="header-button-left"><a class="header-link-left" href="#">About</a></span>
             <span class="header-button-left"><a class="header-link-left" href="#">Demo</a></span>
             <span class="header-button-left"><a class="header-link-left" href="#">Pricing</a></span>
-            <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
-            <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span>
+            <a class="header-button-right" id="login-button" href="#"><span>Login</span></a>
+            <a class="header-button-right" id="premium-button" href="#"><span>Premium</span></a>
+            <!-- <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
+            <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span> -->
         </div>
 
         <!-- <div class="top-nav">
