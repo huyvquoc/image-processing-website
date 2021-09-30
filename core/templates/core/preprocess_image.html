@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- <meta content="width=device-width, initial-scale=1" name="viewport" /> -->
         <style>
             #company-logo {
@@ -30,7 +31,7 @@
                 font-family: "Audiowide", sans-serif;
             }
             .process-image:hover {
-                background-color: #5083bed8;
+                background-color: #8ab5f5d8;
                 color: white;
             }
             .text-field {
@@ -54,7 +55,7 @@
                 font-family: "Trirong", serif;
             }
             label[for="id_image"]:hover {
-                background-color: rgb(114, 248, 114);
+                background-color: rgba(146, 255, 161, 0.836);
                 color: white;
             }
             label[for="id_blur"] {
@@ -139,7 +140,7 @@
             .header-button-right {
                 position: relative;
                 width: 6em;
-                left: 60%;
+                left: 65%;
                 bottom: 25%;
                 /* transform: translateX(-100%); */
                 background-color: white;
@@ -221,11 +222,94 @@
                 display: table-cell;
                 position: static;
                 width: 100vw;
-                padding: 10px;
-                text-align: center;
+                padding: 1px;
+                text-align: left;
                 background-color: rgba(246, 246, 253, 0.986);
-                margin: 10px;
+                margin: 1px;
                 border-style: groove;
+            }
+            .container {
+                position: relative;
+            }
+            .footer-top .column-footer-top {
+                width: 15%;
+                margin-right: 4%;
+            }
+            .row-footer-top {
+                position: relative;
+                left: 250px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            @media (min-width: 200px){
+                .column-footer-top {
+                    flex: 0 0 0 0 20%;
+                }
+            }
+            /* .column-footer-top {
+                display:contents;
+                float: left;
+                width: 25%;
+                padding: 1px;
+                height: 1px;
+            } */
+            /* .row-footer-top:after {
+                content: "";
+                display: table;
+                clear: both;
+            } */
+            .row-footer-bottom {
+                position: relative;
+                left: 100px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            @media (min-width: 1200px){
+                .column-footer-bottom {
+                    flex: 0 0 50%;
+                }
+            }
+            /* .column-footer-bottom {
+                display: contents;
+                float:left;
+                width: 50%;
+                padding: 1px;
+                height: 1px;
+            } */
+            /* .row-footer-bottom:after {
+                content: "";
+                display: table;
+                clear: both;
+            } */
+            /* #company-info {
+                position: relative;
+                left: 300px;
+                width: 300px;
+            } */
+            /* #social-info {
+                position: static;
+                left: 10px;
+                width: 300px;
+            } */
+
+            #trademark {
+                position: relative;
+                left: 300px;
+                width: 300px;
+            }
+            /* #copyright {
+                position: relative;
+                left: 10px;
+                width: 300px;
+            } */
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
             }
 
             .top-nav {
@@ -247,13 +331,13 @@
             }
 
             /*Create two equal columns*/
-            .column {
+            .column-removal {
                 float: left;
                 width: 50%;
                 padding: 15px;
             }
             /*Clear floats after the columns*/
-            .row:after {
+            .row-removal:after {
                 content: "";
                 display: table;
                 clear: both;
@@ -344,6 +428,40 @@
                 -webkit-animation-delay: -4s;
                 background-color: yellow;
             }
+            #terms-and-policy {
+                text-align: center;
+            }
+            #terms-and-policy a {
+                color: rgba(18, 89, 241, 0.795);
+                text-decoration: none;
+            }
+            #terms-and-policy a:hover {
+                text-decoration: underline;
+            }
+
+            .fa {
+                padding: 10px;
+                font-size: 20px;
+                width: 50px;
+                text-align: center;
+                text-decoration: none;
+                margin: 2px 2px;
+            }
+            .fa:hover {
+                opacity: 0.7;
+            }
+            .fa-facebook {
+                background: #3B5998;
+                color: white;
+            }
+            .fa-twitter {
+                background: #55ACEE;
+                color: white;
+            }
+            .fa-linkedin {
+                background: #007bb5;
+                color: white;
+            }
 
         </style>
     </head>
@@ -370,8 +488,8 @@
             <a href="#">Pricing</a>
         </div> -->
 
-        <div class="row">
-            <div class="column">
+        <div class="row-removal">
+            <div class="column-removal">
                 <!-- <h2>Remove image background</h2>
                 <p>Lorem ipsum</p> -->
                 <div class="sample-demo-box">
@@ -381,7 +499,7 @@
                     </p>
                 </div>
             </div>
-            <div class="column">
+            <div class="column-removal">
                 <!-- <p>Lorem ipsum</p> -->
                 <div class="text-box">
                     <h1 id="text1">Remove image background</h1>
@@ -412,9 +530,81 @@
                 {% endif %}
             </div>
         </div>
+        <div id="terms-and-policy">By uploading an image you hereby agree to our
+            <a href="#">Terms of Service</a>,
+            <a href="#">General Terms & Conditions</a>
+            and <a href="#">Privacy Policy</a>.
+        </div>
 
         <div class="footer">
-            <h2>Footer</h2>
+            <!-- <h2>Footer</h2> -->
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row-footer-top">
+                        <div class="column-footer-top">
+                            <h5>Know More</h5>
+                            <ul>
+                                <li><a href="#" title>Personal Use</a></li>
+                                <li><a href="#" title>Photography</a></li>
+                                <li><a href="#" title>News & Media</a></li>
+                                <li><a href="#" title>Pricing</a></li>
+                            </ul>
+                        </div>
+                        <div class="column-footer-top">
+                            <h5>Made By Willogy</h5>
+                            <ul>
+                                <li><a href="#" title>API Documentation</a></li>
+                                <li><a href="#" title>Background Remover</a></li>
+                                <li><a href="#" title>Style Transfer</a></li>
+                            </ul>
+                        </div>
+                        <div class="column-footer-top">
+                            <h5>Company</h5>
+                            <ul>
+                                <li><a href="#" title>About Us</a></li>
+                                <li><a href="#" title>Help & FAQs</a></li>
+                                <li><a href="#" title>Support</a></li>
+                                <li><a href="#" title>Willogy Insights</a></li>
+                            </ul>
+                        </div>
+                        <div class="column-footer-top">
+                            <h5>Follow Us On</h5>
+                            <a href="#" class="fa fa-facebook"></a>
+                            <a href="#" class="fa fa-twitter"></a>
+                            <a href="#" class="fa fa-linkedin"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row-footer-bottom">
+                        <div class="column-footer-bottom">
+                            <p id="trademark">
+                                All trademarks, service marks, trade names, product names, logos 
+                                and trade dress appearing on our website are the property of their respective owners.
+                            </p>
+                        </div>
+                        <div class="column-footer-bottom">
+                            <ul>
+                                <li>
+                                    <a href="#">Terms of Service</a>
+                                </li>
+                                <li>
+                                    <a href="#">General Terms and Conditions</a>
+                                </li>
+                                <li>
+                                    <a href="#">Privacy Policy</a>
+                                </li>
+                            </ul>
+                            <p id="copyright">
+                                Copyright 2020-2021 Willogy Co., Ltd. - All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
