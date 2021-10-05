@@ -4,6 +4,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
         <!-- <meta content="width=device-width, initial-scale=1" name="viewport" /> -->
         <style>
             #company-logo {
@@ -197,16 +200,16 @@
                 position: relative;
                 opacity: 0;
                 left: -5px;
-                -webkit-transition: all 0.6s;
-                transition: all 0.6s;
+                -webkit-transition: all 0.4s;
+                transition: all 0.4s;
             }
             .header-button-right#premium-button:after {
                 content:" >";
                 position: relative;
                 opacity: 0;
                 left: -5px;
-                -webkit-transition: all 0.6s;
-                transition: all 0.6s;
+                -webkit-transition: all 0.4s;
+                transition: all 0.4s;
             }
             .header-button-right#login-button:hover:after{
                 opacity: 1;
@@ -233,7 +236,7 @@
             }
             .footer-top .column-footer-top {
                 width: 15%;
-                margin-right: 4%;
+                margin-right: 5%;
             }
             .row-footer-top {
                 position: relative;
@@ -243,7 +246,7 @@
             }
             @media (min-width: 200px){
                 .column-footer-top {
-                    flex: 0 0 0 0 20%;
+                    flex: 0 0 0 0 25%;
                 }
             }
             /* .column-footer-top {
@@ -264,7 +267,7 @@
                 display: flex;
                 flex-wrap: wrap;
             }
-            @media (min-width: 1200px){
+            @media (min-width: 200px){
                 .column-footer-bottom {
                     flex: 0 0 50%;
                 }
@@ -347,25 +350,49 @@
                     width: 100%;
                 }
             } */
+
+            /* === ANIMATION OF SAMPLE DEMO BOX === */
             p.fadein {
                 display: inline-block;
                 /* position: fixed; */
                 /* width: 400px;
                 height: 300px; */
             }
-
             .fadein img {
                 position: relative;
                 clear: both;
                 float: left;
                 /* top:0; */
-                -webkit-animation-name: fade;
+                -webkit-animation-name: fade1;
                 -webkit-animation-iteration-count: infinite;
                 -webkit-animation-duration: 6s;
-                animation-name: fade;
+                animation-name: fade1;
                 animation-iteration-count: infinite;
                 animation-duration: 6s;
             }
+            @-webkit-keyframes fade1 {
+                0% {opacity: 0;}
+                20% {opacity: 1;}
+                33% {opacity: 1;}
+                53% {opacity: 0;}
+                100% {opacity: 0;}
+            }
+            @keyframes fade1 {
+                0% {opacity: 0;}
+                20% {opacity: 1;}
+                33% {opacity: 1;}
+                53% {opacity: 0;}
+                100% {opacity: 0;}
+            }
+            #f1 {
+                background-color: lightblue;
+            }
+            #f2 {
+                -webkit-animation-delay: -4s;
+                background-color: yellow;
+            }
+            /* =============================== */
+
             div.sample-demo-box {
                 display: inline-block;
                 position: relative;
@@ -406,28 +433,6 @@
                 font-family: Georgia, serif;
             }
 
-            @-webkit-keyframes fade {
-                0% {opacity: 0;}
-                20% {opacity: 1;}
-                33% {opacity: 1;}
-                53% {opacity: 0;}
-                100% {opacity: 0;}
-            }
-            @keyframes fade {
-                0% {opacity: 0;}
-                20% {opacity: 1;}
-                33% {opacity: 1;}
-                53% {opacity: 0;}
-                100% {opacity: 0;}
-            }
-
-            #f1 {
-                background-color: lightblue;
-            }
-            #f2 {
-                -webkit-animation-delay: -4s;
-                background-color: yellow;
-            }
             #terms-and-policy {
                 text-align: center;
             }
@@ -463,6 +468,116 @@
                 color: white;
             }
 
+            /*SLIDE SHOW*/
+            * {box-sizing:border-box}
+
+            /* Slideshow container */
+            .slideshow-container {
+                max-width: 1000px;
+                position: relative;
+                margin: auto;
+            }
+
+            /* Hide the images by default */
+            .mySlides {
+                display: none;
+            }
+
+            /* Next & previous buttons */
+            .prev, .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                right: 100%;
+                width: auto;
+                margin-top: -22px;
+                padding: 1px;
+                color: rgb(153, 41, 41);
+                font-weight: bold;
+                font-size: 18px;
+                transition: 0.6s ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+            }
+
+            /* Position the "next button" to the right */
+            .next {
+                right: 0;
+                border-radius: 2px 0 0 2px;
+            }
+
+            /* On hover, add a black background color with a little bit see-through */
+            /* .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            } */
+
+            /* Caption text */
+            .text {
+                color: #f2f2f2;
+                font-size: 15px;
+                padding: 8px 12px;
+                position: absolute;
+                bottom: 8px;
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Number text (1/3 etc) */
+            .numbertext {
+                color: #f2f2f2;
+                font-size: 12px;
+                padding: 8px 12px;
+                position: absolute;
+                top: 0;
+            }
+
+            /* The dots/bullets/indicators */
+            .dot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: #bbb;
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 0.6s ease;
+            }
+
+            .active, .dot:hover {
+                background-color: #717171;
+            }
+
+            /* Fading animation */
+            .fade {
+                -webkit-animation-name: fade;
+                -webkit-animation-duration: 1.5s;
+                animation-name: fade;
+                animation-duration: 1.5s;
+            }
+
+            @-webkit-keyframes fade {
+                from {opacity: .4}
+                to {opacity: 1}
+            }
+
+            @keyframes fade {
+                from {opacity: .4}
+                to {opacity: 1}
+            }
+
+            .slide-show-box {
+                /* display: table-cell;
+                position: static;
+                width: 100vw; */
+                padding: 5px;
+                text-align: center;
+                background-color: rgba(248, 248, 250, 0.999);
+                margin: 1px;
+                /* border-style: groove; */
+            }
+            .slide-show-box h1 {
+                font-family: 'Ephesis', cursive;
+            }
         </style>
     </head>
     <body>
@@ -530,11 +645,49 @@
                 {% endif %}
             </div>
         </div>
+
         <div id="terms-and-policy">By uploading an image you hereby agree to our
             <a href="#">Terms of Service</a>,
             <a href="#">General Terms & Conditions</a>
             and <a href="#">Privacy Policy</a>.
         </div>
+        <br><br>
+
+        <div class="slide-show-box">
+            <h1>Photo Collection</h1>
+            <!-- SLIDE SHOW -->
+            <div class="slideshow-container">
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                    <div class="numbertext">1 / 3</div>
+                    <img src="../../../static/dog3.jpg" style="height:360px">
+                    <div class="text">Caption Text</div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">2 / 3</div>
+                    <img src="../../../static/cat10.jpg" style="height:360px">
+                    <div class="text">Caption Two</div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">3 / 3</div>
+                    <img src="../../../static/dog8.jpg" style="height:360px">
+                    <div class="text">Caption Three</div>
+                </div>
+
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </div>
+        <br>
 
         <div class="footer">
             <!-- <h2>Footer</h2> -->
@@ -606,5 +759,35 @@
                 </div>
             </div>
         </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+    }
+    </script>
+
     </body>
 </html>
