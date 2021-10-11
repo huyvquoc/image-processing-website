@@ -25,6 +25,9 @@ from .image_processing_methods import (
     frame, convert_jpg_to_png, 
     remove_background
 )
+from .foreground_background_processing import (
+    remove_background_cnn
+)
 from .models import Images
 from .utility import handle_uploaded_file
 
@@ -273,11 +276,12 @@ def remove_background_image(
             img_obj = form.instance
             img_obj.save()
             ori_img = img_obj.image
-            new_img = remove_background(
-                ori_img, blur, 
-                canny_thresh_1, canny_thresh_2,
-                mask_dilate_iter, mask_erode_iter, 
-                (mask_color_b, mask_color_g, mask_color_r))
+            # new_img = remove_background(
+            #     ori_img, blur, 
+            #     canny_thresh_1, canny_thresh_2,
+            #     mask_dilate_iter, mask_erode_iter, 
+            #     (mask_color_b, mask_color_g, mask_color_r))
+            new_img = remove_background_cnn(ori_img)
             new_img_obj = Images(image=new_img)
             new_img_obj.save()
             print('[*] new_img_obj: ', dir(new_img_obj)) # Print the attributes of core.models.Images

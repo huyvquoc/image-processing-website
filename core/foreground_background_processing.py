@@ -1,14 +1,19 @@
 import os
 import time
+from io import BytesIO
 
 import cv2
 import numpy as np
+from PIL import Image
 
 from torchvision import models
 import torchvision.transforms as T
 from PIL import Image
 import matplotlib.pyplot as plt
 import torch
+
+# Django
+from django.core.files import File
 
 
 def decode_seg_map(image, nc=21):
@@ -37,7 +42,9 @@ def decode_seg_map(image, nc=21):
     return rgb
 
 def foreground_background_preprocess(color_seg_map, src_img, bg_img, type_of_process='remove-background'):
-    foreground = cv2.imread(src_img)
+    # foreground = cv2.imread(src_img)
+    foreground = Image.open(src_img).convert('BGR')
+    foreground = np.array(foreground)
     foreground = cv2.cvtColor(foreground, cv2.COLOR_BGR2RGB)
     foreground = cv2.resize(foreground, (color_seg_map.shape[1], color_seg_map.shape[0]))
 
@@ -95,6 +102,21 @@ def segmentation_then_process(network, input_path, background_path=None, type_of
     output_img = foreground_background_preprocess(color_seg_map, input_path, background_path, type_of_process)
 
     return output_img
+
+def remove_background_cnn(img_path, show_orig=False):
+    fcn = models.segmentation.fcn_resnet101(pretrained=True).eval()
+    output = segmentation_then_process(fcn, img_path, type_of_process='remove-background', show_orig=False, dev="cpu")
+
+    output = Image.fromarray(output)
+    im_io = BytesIO()
+    output.save(
+        im_io, 
+        'JPEG')
+    new_image = File(
+        im_io, 
+        name=output.name)
+
+    return new_image
 
 if __name__ == "__main__":
     fcn = models.segmentation.fcn_resnet101(pretrained=True).eval()
