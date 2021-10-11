@@ -385,21 +385,31 @@
                 100% {opacity: 0;}
             }
             #f1 {
+                position: absolute;
+                left: 10px;
+                top: 10px;
                 background-color: lightblue;
             }
             #f2 {
+                position: absolute;
+                left: 10px;
+                top: 10px;
                 -webkit-animation-delay: -4s;
                 background-color: yellow;
             }
             /* =============================== */
 
             div.sample-demo-box {
-                display: inline-block;
+                /* display: inline-block;
+                position: relative; */
+                display: flex;
+                flex-wrap: wrap;
                 position: relative;
-                /* width: 300px; */
+                width: 530px;
+                height: 330px;
                 /* float: right; */
-                left: 300px;
-                top: 20px;
+                left: 320px;
+                top: 50px;
                 border: 5px outset rgba(114, 207, 243, 0.658);
                 padding: 50px;
                 margin: 20px;
@@ -409,12 +419,13 @@
             }
             div.upload-download-image-box {
                 display: flex;
-                position: absolute;
+                position: relative;
                 flex-wrap: wrap;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                left: 1100px;
+                left: -70px;
+                top: 10px;
             }
             div.text-box {
                 /* display: inline-block; */
@@ -666,7 +677,7 @@
                 </div>
             </div>
         </div>
-
+        <br>
         <div id="terms-and-policy">By uploading an image you hereby agree to our
             <a href="#">Terms of Service</a>,
             <a href="#">General Terms & Conditions</a>
