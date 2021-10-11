@@ -107,6 +107,35 @@
                 text-align: left;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
+            .column-header-top-1 {
+                width: 5%;
+                margin-right: 0%;
+                margin-top: 0.5%;
+            }
+            .column-header-top-2 {
+                width: 25%;
+                margin-right: 0%;
+                margin-top: 0.5%;
+            }
+            .column-header-top-3 {
+                width: 25%;
+                left: 100px;
+                margin-left: 45%;
+                margin-top: 0.5%;
+            }
+            .row-header-top {
+                position: relative;
+                left: 200px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            @media (min-width: 200px){
+                .column-header-top-1,
+                .column-header-top-2,
+                .column-header-top-3 {
+                    flex: 0 0 0 20%;
+                }
+            }
             .header #text1 {
                 position: static;
                 left: 15px;
@@ -114,10 +143,10 @@
                 font-size: 8px;
             }
             .header-button-left {
-                position: relative;
-                left: 7%;
+                position: static;
+                right: 500px;
                 bottom: 25%;
-                transform: translateX(-100%);
+                /* transform: translateX(-100%); */
                 background-color: white;
                 border-left-style: outset;
                 border-right-style: outset;
@@ -141,9 +170,10 @@
                 color: rgb(60, 109, 245);
             }
             .header-button-right {
-                position: relative;
+                position: static;
+                display: inline-block;
                 width: 6em;
-                left: 65%;
+                left: 600px;
                 bottom: 25%;
                 /* transform: translateX(-100%); */
                 background-color: white;
@@ -154,7 +184,6 @@
                 padding: 10px 4px;
                 text-align: center;
                 text-decoration: none;
-                display: inline-block;
                 font-size: 18px;
                 margin: 2px 2px;
                 transition-duration: 0.8s;
@@ -608,19 +637,29 @@
     </head>
     <body>
         <div class="header">
-            <a id="company-logo" href="/removebackground">
-                <div>
-                    <img src="../../../static/willogy_logo.png" alt="image" style="width:70px;height:70px;">
-                    <!-- <p id="text1">Willogy</p> -->
+            <div class="container">
+                <div class="row-header-top">
+                    <div class="column-header-top-1">
+                        <a id="company-logo" href="/removebackground">
+                            <div>
+                                <img src="../../../static/willogy_logo.png" alt="image" style="width:70px;height:70px;">
+                                <!-- <p id="text1">Willogy</p> -->
+                            </div>
+                        </a>
+                    </div>
+                    <div class="column-header-top-2">
+                        <span class="header-button-left"><a class="header-link-left" href="#">About</a></span>
+                        <span class="header-button-left"><a class="header-link-left" href="#">Demo</a></span>
+                        <span class="header-button-left"><a class="header-link-left" href="#">Pricing</a></span>
+                    </div>
+                    <div class="column-header-top-3">
+                        <a class="header-button-right" id="login-button" href="#"><span>Login</span></a>
+                        <a class="header-button-right" id="premium-button" href="#"><span>Premium</span></a>
+                    </div>
+                    <!-- <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
+                    <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span> -->
                 </div>
-            </a>
-            <span class="header-button-left"><a class="header-link-left" href="#">About</a></span>
-            <span class="header-button-left"><a class="header-link-left" href="#">Demo</a></span>
-            <span class="header-button-left"><a class="header-link-left" href="#">Pricing</a></span>
-            <a class="header-button-right" id="login-button" href="#"><span>Login</span></a>
-            <a class="header-button-right" id="premium-button" href="#"><span>Premium</span></a>
-            <!-- <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
-            <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span> -->
+            </div>
         </div>
 
         <!-- <div class="top-nav">
