@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Ephesis&display=swap" rel="stylesheet">
@@ -487,6 +488,19 @@
                 position: static;
                 bottom: 200px;
             }
+            .download-btn {
+                background-color: DodgerBlue;
+                border: none;
+                color: white;
+                padding-right: 20px;
+                cursor: pointer;
+                font-size: 20px;
+            }
+            .download-btn a {
+                text-decoration: none;
+                text-align: center;
+                color: white;
+            }
 
             #terms-and-policy {
                 text-align: center;
@@ -712,6 +726,9 @@
                         <div class="download-image-box">
                             <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
                         </div>
+                        <!-- <button class="download-btn"> -->
+                        <a  href="{{ img_obj.image.url }}" download><i class="fa fa-download"></i>Download</a>
+                        <!-- </button> -->
                     {% endif %}
                 </div>
             </div>

@@ -245,6 +245,8 @@ def post(
             'core/index.html',
             {'formset': formset})
 
+# def download_file(request):
+
 # @login_required # uncomment this line to require login before removing background
 def remove_background_image(
         request):
@@ -278,7 +280,12 @@ def remove_background_image(
                 (mask_color_b, mask_color_g, mask_color_r))
             new_img_obj = Images(image=new_img)
             new_img_obj.save()
-
+            print('[*] new_img_obj: ', dir(new_img_obj)) # Print the attributes of core.models.Images
+            print('[*] new_img_obj.image: ', new_img_obj.image) # Print 
+            print('[*] type(new_img_obj.image): ', type(new_img_obj.image)) # Print 
+            print('[*] dir(new_img_obj.image): ', dir(new_img_obj.image)) # Print 
+            print('[*] new_img_obj.image.url: ', new_img_obj.image.url) # Print 
+            print('[*] new_img_obj.image.path: ', new_img_obj.image.path) # Print 
             return render(
                 request, 
                 'core/preprocess_image.html', 

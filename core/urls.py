@@ -36,6 +36,10 @@ urlpatterns = [
         "upload/", 
         views.post, 
         name="upload"),
+    # path(
+    #     "download/",
+    #     views.download_file,
+    #     name="download"),
     path(
         "removebackground/", 
         views.remove_background_image, 
