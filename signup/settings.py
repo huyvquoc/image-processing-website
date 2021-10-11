@@ -32,6 +32,7 @@ SECRET_KEY = 'django-insecure-)vdlt)qtd_^%2q#axoy@g6dug3txr5-c@zb7mqzui73@21tdvm
 DEBUG = False 
 
 ALLOWED_HOSTS = [
+    'stark-bastion-99715.herokuapp.com',
     'cryptic-citadel-33658.herokuapp.com', 
     'royal-loon-07066.herokuapp.com',
     '127.0.0.1'
