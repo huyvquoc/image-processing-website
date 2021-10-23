@@ -31,7 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'cryptic-citadel-33658.herokuapp.com', 
-    '127.0.0.1'
+    '127.0.0.1',
+    '0.0.0.0'
 ]
 
 # Application definition
@@ -92,12 +93,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'huy',
-        'PASSWORD': 'huy3041997',
+        'PASSWORD': 'huy12345',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
