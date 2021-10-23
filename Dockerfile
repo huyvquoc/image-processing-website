@@ -21,3 +21,9 @@ WORKDIR /code
 COPY requirements_local.txt /code/
 RUN pip install -r requirements_local.txt
 COPY . /code/
+# COPY docker-entrypoint.sh /code/
+# RUN chmod +x docker-entrypoint.sh
+# ENTRYPOINT ["./docker-entrypoint.sh"]
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
