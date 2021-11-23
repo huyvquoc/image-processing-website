@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'core.apps.CoreConfig',
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -179,3 +181,9 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# For Tailwind CSS
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
