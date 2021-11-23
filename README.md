@@ -72,6 +72,12 @@ If you want to update the database:
 make migrate
 ```
 
+## Docker deployment
+
+```sh
+docker-compose up
+```
+
 ## Heroku deployment
 
 Add the homepage link produced by Heroku to ```ALLOWED_HOSTS``` in ```settings.py```.
@@ -117,6 +123,10 @@ Exit the CLI:
 ```sh
 exit
 ```
+
+## Integrate Tailwind CSS with Django:
+
+Follow this [doc](https://django-tailwind.readthedocs.io/en/latest/installation.html).
 
 ## References
 
