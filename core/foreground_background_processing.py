@@ -76,8 +76,6 @@ def foreground_background_preprocess(color_seg_map, src_img, bg_img, type_of_pro
 
     return outImage/255
 
-
-
 def segmentation_then_process(network, input_path, background_path=None, type_of_process='remove-background', show_orig=True, dev='cuda'):
     img = Image.open(input_path)
 
@@ -93,9 +91,9 @@ def segmentation_then_process(network, input_path, background_path=None, type_of
                                  std=[0.229, 0.224, 0.225])])
 
     transformed_img = transformations(img).unsqueeze(0).to(dev)
-    output_segmentation = network.to(dev)(transformed_img)['out']
+    output_segmentation = network.to(dev)(transformed_img)['out'] # a result tensor whose first dim has the size equal to the number of categories. Each category has an output segmentation map
     print('[**] output_segmentation: ', output_segmentation.shape)
-    output_seg_map = torch.argmax(output_segmentation.squeeze(), dim=0).detach().cpu().numpy()
+    output_seg_map = torch.argmax(output_segmentation.squeeze(), dim=0).detach().cpu().numpy() # turn into one segmentation map
     print('[**] output_seg_map.shape: ', output_seg_map.shape)
     print('[**] np.unique(output_seg_map): ', np.unique(output_seg_map))
     color_seg_map = decode_seg_map(output_seg_map)

@@ -1,3 +1,4 @@
+{% load tailwind_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -648,8 +649,12 @@
                 font-family: 'Ephesis', cursive;
             }
         </style>
+        <link href="../../../theme/static_src/src/styles.css" rel="stylesheet">
+        <link href="../../../theme/static/css/dist/styles.css" rel="stylesheet">
+        {% tailwind_css %}
     </head>
     <body>
+        <h1 class="text-4xl font-bold text-center text-red-500">Hello world</h1>
         <div class="header">
             <div class="container">
                 <div class="row-header-top">
@@ -699,6 +704,7 @@
                 <div class="upload-download-image-box">
                     <div class="text-box">
                         <h1 id="text1">Remove image background</h1>
+                        <h1 class="text-4xl font-bold text-center text-red-500">Remove image background</h1>
                         <h2 id="text2">Automatically and free</h2>
                     </div>
                     <br>
