@@ -9,6 +9,26 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  nodeserv:
+    build:
+      context: ./theme/static_src
+    volumes:
+      - ./theme/static_src:/usr/src/app
+      - /usr/src/app/node_modules
+      # - .:/code
+      # - /code/theme/static_src/node_modules
+    restart: always
+    ports:
+      - "3000:3000"
+      # - "9229:9229"
+    command: npm run start:dev
+    # command: npm run dev
+    environment:
+      NODE_ENV: development
+      DEBUG: nodejs-docker-express:*
+    # links:
+    #   - web
+    #   - tailwind
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -19,8 +39,26 @@ services:
       - db
     volumes:
       - .:/code
+      # - .:/code/theme/static_src/node_modules
+    restart:
+      "unless-stopped"
     ports:
       - "8000:8000"
+  tailwind:
+    build: .
+    command: python manage.py tailwind start
+    environment:
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=signup.settings_docker
+    depends_on:
+      - nodeserv
+    volumes:
+      - .:/code
+      # - .:/code/theme/static_src/node_modules
+    restart:
+      "unless-stopped"
+    ports:
+      - "8383:8383"
 
 # volumes:
 #   pgdata1:

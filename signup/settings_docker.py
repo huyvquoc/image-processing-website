@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'core.apps.CoreConfig',
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -146,10 +148,9 @@ https://stackoverflow.com/questions/7574759/django-cant-get-static-css-files-to-
 
 Must runserver with --insecure parameter
 '''
-
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 print("[SH] project_dir: {0}".format(PROJECT_DIR))
-# STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # print("[SH] static_root: ", STATIC_ROOT)
 STATIC_URL = '/static/'
@@ -180,3 +181,9 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# For Tailwind CSS
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

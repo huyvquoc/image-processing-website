@@ -25,9 +25,9 @@ from .image_processing_methods import (
     frame, convert_jpg_to_png, 
     remove_background
 )
-from .foreground_background_processing import (
-    remove_background_cnn
-)
+# from .foreground_background_processing import (
+#     remove_background_cnn
+# )
 from .models import Images
 from .utility import handle_uploaded_file
 
