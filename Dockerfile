@@ -43,10 +43,11 @@ RUN pip install -r requirements_local.txt
 COPY . /code/
 
 WORKDIR /code/theme/static_src
-RUN npm cache clean --force
-RUN rm -rf node_modules
+# RUN npm cache clean --force
+# RUN rm -rf node_modules
+RUN npm install -g nodemon --save-dev
+RUN npm install -g npm-run-all browser-sync cross-env
 RUN npm install
-RUN npm install nodemon --save-dev
 # RUN npm start
 # CMD ["npm", "start"]
 

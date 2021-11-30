@@ -17,15 +17,18 @@ services:
       - /usr/src/app/node_modules
       # - .:/code
       # - /code/theme/static_src/node_modules
-    restart: always
+    # restart: always
     ports:
       - "3000:3000"
       # - "9229:9229"
-    command: npm run start:dev
+    # command: nodemon --watch template 
+    # command: npm start
     # command: npm run dev
     environment:
       NODE_ENV: development
-      DEBUG: nodejs-docker-express:*
+      # DEBUG: nodejs-docker-express:*
+    # networks:
+    #   - back-tier
     # links:
     #   - web
     #   - tailwind
@@ -53,13 +56,17 @@ services:
     depends_on:
       - nodeserv
     volumes:
-      - .:/code
+      - ./theme:/code/theme
       # - .:/code/theme/static_src/node_modules
     restart:
       "unless-stopped"
     ports:
       - "8383:8383"
+    # networks:
+    #   - back-tier
 
+# networks:
+#   back-tier:
 # volumes:
 #   pgdata1:
 #     driver: local

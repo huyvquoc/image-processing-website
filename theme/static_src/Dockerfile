@@ -10,15 +10,16 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install -g nodemon mocha supervisor
+# RUN npm install -g nodemon mocha supervisor npm-run-all
 RUN npm install
 
 EXPOSE 3000
 
 ENV NODE_ENV=development
+ENV DEBUG=true
 
 COPY . .
 
-CMD [ "npm", "run", "start.dev" ]
+# CMD [ "npm", "run", "start" ]
 # CMD ["npm", "start"]
 # CMD ["nodemon", "bin/www"]
