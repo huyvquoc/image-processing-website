@@ -9,23 +9,23 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  nodeserv:
-    build:
-      context: ./theme/static_src
-    volumes:
-      - ./theme/static_src:/usr/src/app
-      - /usr/src/app/node_modules
+  # nodeserv:
+  #   build:
+  #     context: ./theme/static_src
+    # volumes:
+    #   - ./theme/static_src:/usr/src/app
+    #   - /usr/src/app/node_modules
       # - .:/code
       # - /code/theme/static_src/node_modules
     # restart: always
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
       # - "9229:9229"
     # command: nodemon --watch template 
     # command: npm start
     # command: npm run dev
-    environment:
-      NODE_ENV: development
+    # environment:
+    #   NODE_ENV: development
       # DEBUG: nodejs-docker-express:*
     # networks:
     #   - back-tier
@@ -38,6 +38,7 @@ services:
     environment:
       - DEBUG=True
       - DJANGO_SETTINGS_MODULE=signup.settings_docker
+      - PATH="${PATH}:/code/theme/static_src/node_modules/.bin"
     depends_on:
       - db
     volumes:
@@ -53,11 +54,12 @@ services:
     environment:
       - DEBUG=True
       - DJANGO_SETTINGS_MODULE=signup.settings_docker
-    depends_on:
-      - nodeserv
+      - PATH="${PATH}:/code/theme/static_src/node_modules/.bin"
+    # depends_on:
+    #   - nodeserv
     volumes:
       - ./theme:/code/theme
-      # - .:/code/theme/static_src/node_modules
+      # - ./theme/static_src/node_modules:/code/theme/static_src/node_modules
     restart:
       "unless-stopped"
     ports:

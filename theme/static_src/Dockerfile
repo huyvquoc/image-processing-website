@@ -12,14 +12,15 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 # RUN npm install -g nodemon mocha supervisor npm-run-all
 RUN npm install
+# RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 
-EXPOSE 3000
-
-ENV NODE_ENV=development
-ENV DEBUG=true
+# ENV NODE_ENV=development
+# ENV DEBUG=true
 
 COPY . .
 
+EXPOSE 3000
+
 # CMD [ "npm", "run", "start" ]
-# CMD ["npm", "start"]
+CMD ["npm", "start"]
 # CMD ["nodemon", "bin/www"]

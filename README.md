@@ -78,6 +78,10 @@ make migrate
 docker-compose up
 ```
 
+Use ```docker ps -a``` to list all the containers (or to know their names).
+
+Use ```docker run -it <container name> bash``` to access the terminal of the specified container.
+
 ## Heroku deployment
 
 Add the homepage link produced by Heroku to ```ALLOWED_HOSTS``` in ```settings.py```.
