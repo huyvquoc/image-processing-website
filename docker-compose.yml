@@ -42,7 +42,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/code
+      - ./core:/code/core
       # - .:/code/theme/static_src/node_modules
     restart:
       "unless-stopped"
@@ -58,7 +58,8 @@ services:
     # depends_on:
     #   - nodeserv
     volumes:
-      - ./theme:/code/theme
+      - ./core:/code/core
+      # - ./theme:/code/theme
       # - ./theme/static_src/node_modules:/code/theme/static_src/node_modules
     restart:
       "unless-stopped"
