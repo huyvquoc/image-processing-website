@@ -654,26 +654,26 @@
         {% tailwind_css %}
     </head>
     <body>
-        <h1 class="text-4xl font-bold text-center text-red-500">Hello world</h1>
         <div class="header">
             <div class="container">
                 <div class="row-header-top">
-                    <div class="column-header-top-1">
-                        <a id="company-logo" href="/removebackground">
-                            <div>
-                                <img src="../../../static/willogy_logo.png" alt="image" style="width:70px;height:70px;">
-                                <!-- <p id="text1">Willogy</p> -->
+                    <div>
+                        <a href="/removebackground">
+                            <div class="p-3 max-w-xs mx-auto bg-white rounded-xl shadow-md flex items-center space-x-5">
+                              <div class="flex-shrink-1">
+                                <img class="h-12 w-12" src="../../../static/willogy_logo.png" alt="ChitChat Logo">
+                              </div>
                             </div>
                         </a>
                     </div>
-                    <div class="column-header-top-2">
-                        <span class="header-button-left"><a class="header-link-left" href="#">About</a></span>
-                        <span class="header-button-left"><a class="header-link-left" href="#">Demo</a></span>
-                        <span class="header-button-left"><a class="header-link-left" href="#">Pricing</a></span>
+                    <div>
+                        <a class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2" href="#">About</a>
+                        <a class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2" href="#">Demo</a>
+                        <a class="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2" href="#">Pricing</a>
                     </div>
-                    <div class="column-header-top-3">
-                        <a class="header-button-right" id="login-button" href="#"><span>Login</span></a>
-                        <a class="header-button-right" id="premium-button" href="#"><span>Premium</span></a>
+                    <div>
+                        <a class="px-5 py-1 text-justify text-yellow-600 font-semibold rounded-md border border-yellow-600 hover:text-white hover:bg-yellow-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-offset-2" href="#">Login</a>
+                        <a class="px-5 py-1 text-justify text-yellow-400 font-semibold rounded-md border border-yellow-400 hover:text-white hover:bg-yellow-400 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2" href="#">Premium</a>
                     </div>
                     <!-- <span class="header-button-right" id="login-button"><a class="header-link-right" href="#">Login</a></span>
                     <span class="header-button-right" id="premium-button"><a class="header-link-right" href="#">Premium</a></span> -->
@@ -691,11 +691,24 @@
             <div class="column-removal">
                 <!-- <h2>Remove image background</h2>
                 <p>Lorem ipsum</p> -->
-                <div class="sample-demo-box">
+                <!-- <div class="sample-demo-box">
                     <p class="fadein">
                         <img id="f2" src="../../../static/dog6.jpg" style="width:500px;height:300px;">
                         <img id="f1" src="../../../static/dog6_remove.jpg" style="width:500px;height:300px;">
                     </p>
+                </div> -->
+                <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                  <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                      <img class="h-48 w-full object-cover md:h-full md:w-48" src="../../../static/dog6.jpg" alt="Man looking at item at a store">
+                      <img class="h-48 w-full object-cover md:h-full md:w-48" src="../../../static/dog6_remove.jpg" alt="Man looking at item at a store">
+                    </div>
+                    <div class="p-8">
+                      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
+                      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
+                      <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+                    </div>
+                  </div>
                 </div>
             </div>
             <div class="column-removal">
