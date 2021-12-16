@@ -727,7 +727,7 @@
                             background-color: rgba(146, 255, 161, 0.836);
                             color: white;
                         } -->
-                        <form class="inline-block bg-blue-50 shadow-md rounded-md px-8 pt-2 pb-2 mb-2 border border-blue-300" method="post" enctype="multipart/form-data">
+                        <form class="inline-block bg-blue-50 shadow-md rounded-md px-8 pt-2 pb-2 mb-2 border border-blue-300 leading-tight focus:bg-white" method="post" enctype="multipart/form-data">
                             <!-- {% csrf_token %}
                             {% for hidden in postForm.hidden_fields %}
                                 {{ hidden }}
@@ -753,27 +753,49 @@
                             <button class="tracking-wide font-semibold text-white py-2 px-4 rounded-lg border-b-2 border-l-2 border-blue-400 bg-blue-300 hover:bg-blue-500 focus:outline-none focus:shadow-outline" type="submit">Process</button>
                         </form>
                     </div>
+                    <div id="terms-and-policy">By uploading an image you hereby agree to our
+                        <a href="#">Terms of Service</a>,
+                        <a href="#">General Terms & Conditions</a>
+                        and <a href="#">Privacy Policy</a>.
+                    </div>
                     <br>
-                    {% if img_obj %}
+                    <!-- {% if new_img_obj %}
                         <div class="download-image-box">
-                            <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
+                            <img src="{{ new_img_obj.image.url }}" alt="connect" style="max-height:300px">
                         </div>
-                        <a  href="{{ img_obj.image.url }}" download>
+                        <a  href="{{ new_img_obj.image.url }}" download>
                             <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
                                 <span>Download</span>
                             </button>
                         </a>
-                    {% endif %}
+                    {% endif %} -->
                 </div>
             </div>
         </div>
-        <br>
-        <div id="terms-and-policy">By uploading an image you hereby agree to our
-            <a href="#">Terms of Service</a>,
-            <a href="#">General Terms & Conditions</a>
-            and <a href="#">Privacy Policy</a>.
+        <br><br>
+
+        <h2 class="font-bold">Interactive tool</h2>
+        <!-- <div class="grid grid-cols-2 gap-2 place-content-evenly" onmousemove="showCoords(event)" onmouseout="clearCoords()"> -->
+        <div class="grid grid-cols-2 gap-2 place-content-evenly">
+            {% if img_obj %}
+                <div>
+                    <img id="inp" src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px" ismap>
+                </div>
+            {% endif %}
+            {% if new_img_obj %}
+                <div>
+                    <img src="{{ new_img_obj.image.url }}" alt="connect" style="max-height:300px">
+                    <a  href="{{ new_img_obj.image.url }}" download>
+                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                            <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                            <span>Download</span>
+                        </button>
+                    </a>
+                </div>
+            {% endif %}
         </div>
+        <p id="demo"></p>
         <br><br>
 
         <div class="slide-show-box">
@@ -882,6 +904,7 @@
             </div>
         </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
     <script>
     var slideIndex = 1;
     showSlides(slideIndex);
@@ -908,6 +931,26 @@
         }
         slides[slideIndex-1].style.display = "block";  
         dots[slideIndex-1].className += " active";
+    }
+
+    // Mouse event - showing coordinates
+    $(document).ready(function() { // https://stackoverflow.com/questions/34867066/javascript-mouse-click-coordinates-for-image
+        $("#inp").on("click", function(event) {
+            var x = event.pageX - this.offsetLeft;
+            var y = event.pageY - this.offsetTop;
+            var coor = "X coords: " + x + ", Y coords: " + y;
+            document.getElementById("demo").innerHTML = coor;
+            // alert("X coordinate: " + x + ", Y coordinate: " + y);
+        });
+    });
+    function showCoords(event) {
+        var x = event.clientX - event.offsetLeft;
+        var y = event.clientY - event.offsetTop;
+        var coor = "X coords: " + x + ", Y coords: " + y;
+        document.getElementById("demo").innerHTML = coor;
+    }
+    function clearCoords() {
+        document.getElementById("demo").innerHTML = "";
     }
     </script>
 

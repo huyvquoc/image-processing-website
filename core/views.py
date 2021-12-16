@@ -293,7 +293,7 @@ def remove_background_image(
             return render(
                 request, 
                 'core/preprocess_image.html', 
-                {'form': form, 'img_obj': new_img_obj})
+                {'form': form, 'img_obj': img_obj, 'new_img_obj': new_img_obj})
     else:
         form = ImageRemoveBackgroundForm()
 
