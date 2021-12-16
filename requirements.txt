@@ -20,3 +20,4 @@ django-storages
 dj-database-url
 matplotlib
 django-tailwind
+crispy-tailwind

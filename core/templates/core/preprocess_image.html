@@ -45,7 +45,7 @@
             input[type="file"] { 
                 display: none;
             }
-            label[for="id_image"] {
+            /* label[for="id_image"] {
                 position: relative;
                 left: 50%;
                 transform: translateX(-50%);
@@ -62,7 +62,7 @@
             label[for="id_image"]:hover {
                 background-color: rgba(146, 255, 161, 0.836);
                 color: white;
-            }
+            } */
             label[for="id_blur"] {
                 display: none;
             }
@@ -705,8 +705,8 @@
                     </div>
                     <div class="p-8">
                       <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
-                      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
-                      <p class="mt-2 text-gray-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+                      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Get the foreground from you images</a>
+                      <p class="mt-2 text-gray-500">This software helps you do the segmentation in an automatical way. After segmentation, you can even combine the foreground with another background.</p>
                     </div>
                   </div>
                 </div>
@@ -714,16 +714,20 @@
             <div class="column-removal">
                 <!-- <p>Lorem ipsum</p> -->
 
-                <div class="upload-download-image-box">
-                    <div class="text-box">
-                        <h1 id="text1">Remove image background</h1>
-                        <h1 class="text-4xl font-bold text-center text-red-500">Remove image background</h1>
-                        <h2 id="text2">Automatically and free</h2>
+                <!-- <div class="upload-download-image-box"> -->
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="flex items-center border-b border-teal-500 py-2">
+                        <h1 class="inline-block text-4xl font-bold text-center text-blue-500">Remove image background</h1>
+                        <h2 class="inline-block text-2xl font-extralight text-center italic">Automatically and free</h2>
                     </div>
                     <br>
                     {% load crispy_forms_tags %}
-                    <div class="upload-image-box">
-                        <form id="post_form" method="post" enctype="multipart/form-data">
+                    <div class="w-full max-w-7xl mx-auto px-4">
+                        <!-- label[for="id_image"]:hover {
+                            background-color: rgba(146, 255, 161, 0.836);
+                            color: white;
+                        } -->
+                        <form class="inline-block bg-blue-50 shadow-md rounded-md px-8 pt-2 pb-2 mb-2 border border-blue-300 leading-tight focus:bg-white" method="post" enctype="multipart/form-data">
                             <!-- {% csrf_token %}
                             {% for hidden in postForm.hidden_fields %}
                                 {{ hidden }}
@@ -733,11 +737,17 @@
                                 {{ field }} <br />
                             {% endfor %} -->
 
+
                             {% csrf_token %}
                             <!-- Read this to know about form.as_p: https://docs.djangoproject.com/en/3.2/topics/forms/-->
-                            {{ form.as_p }}
+                            <!-- {{ form.as_p }} --> <!-- Old -->
+                            <!-- {{ form|crispy }} --> <!-- will render the form using Tailwind template pack -->
+                            <div class="mb-4">
+                                <label class="inline-block align-baseline font-extralight text-white text-sm py-2 px-4 rounded-lg mb-2 border-b-2 border-l-2 border-green-400 bg-green-300 hover:bg-green-500" for="id_image">Upload</label>
+                            </div>
 
-                            <button class="process-image" type="submit">Process</button>
+                            <!-- <button class="process-image" type="submit">Process</button> -->
+                            <button class="tracking-wide font-extralight text-white py-2 px-4 rounded-lg border-b-2 border-l-2 border-blue-400 bg-blue-300 hover:bg-blue-500 focus:outline-none focus:shadow-outline" type="submit">Process</button>
                         </form>
                     </div>
                     <br>

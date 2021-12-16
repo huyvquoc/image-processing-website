@@ -12,6 +12,7 @@ sqlparse==0.4.1
 whitenoise==5.2.0
 matplotlib
 django-tailwind
+crispy-tailwind==0.5.0
 # torch 
 # torchvision 
 # torchaudio
