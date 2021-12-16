@@ -714,8 +714,8 @@
             <div class="column-removal">
                 <!-- <p>Lorem ipsum</p> -->
 
-                <!-- <div class="upload-download-image-box"> -->
-                <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="upload-download-image-box">
+                <!-- <div class="flex flex-wrap -mx-3 mb-6"> -->
                     <div class="flex items-center border-b border-teal-500 py-2">
                         <h1 class="inline-block text-4xl font-bold text-center text-blue-500">Remove image background</h1>
                         <h2 class="inline-block text-2xl font-extralight text-center italic">Automatically and free</h2>
@@ -727,7 +727,7 @@
                             background-color: rgba(146, 255, 161, 0.836);
                             color: white;
                         } -->
-                        <form class="inline-block bg-blue-50 shadow-md rounded-md px-8 pt-2 pb-2 mb-2 border border-blue-300 leading-tight focus:bg-white" method="post" enctype="multipart/form-data">
+                        <form class="inline-block bg-blue-50 shadow-md rounded-md px-8 pt-2 pb-2 mb-2 border border-blue-300" method="post" enctype="multipart/form-data">
                             <!-- {% csrf_token %}
                             {% for hidden in postForm.hidden_fields %}
                                 {{ hidden }}
@@ -741,13 +741,16 @@
                             {% csrf_token %}
                             <!-- Read this to know about form.as_p: https://docs.djangoproject.com/en/3.2/topics/forms/-->
                             <!-- {{ form.as_p }} --> <!-- Old -->
-                            <!-- {{ form|crispy }} --> <!-- will render the form using Tailwind template pack -->
+                            <div style="display: none;">
+                                {{ form|crispy }}
+                            </div>
+
                             <div class="mb-4">
-                                <label class="inline-block align-baseline font-extralight text-white text-sm py-2 px-4 rounded-lg mb-2 border-b-2 border-l-2 border-green-400 bg-green-300 hover:bg-green-500" for="id_image">Upload</label>
+                                <label class="font-semibold text-white text-sm py-2 px-4 rounded-lg mb-2 border-b-2 border-l-2 border-green-400 bg-green-300 hover:bg-green-500" for="id_image">Upload</label>
                             </div>
 
                             <!-- <button class="process-image" type="submit">Process</button> -->
-                            <button class="tracking-wide font-extralight text-white py-2 px-4 rounded-lg border-b-2 border-l-2 border-blue-400 bg-blue-300 hover:bg-blue-500 focus:outline-none focus:shadow-outline" type="submit">Process</button>
+                            <button class="tracking-wide font-semibold text-white py-2 px-4 rounded-lg border-b-2 border-l-2 border-blue-400 bg-blue-300 hover:bg-blue-500 focus:outline-none focus:shadow-outline" type="submit">Process</button>
                         </form>
                     </div>
                     <br>
@@ -755,9 +758,12 @@
                         <div class="download-image-box">
                             <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
                         </div>
-                        <!-- <button class="download-btn"> -->
-                        <a  href="{{ img_obj.image.url }}" download><i class="fa fa-download"></i>Download</a>
-                        <!-- </button> -->
+                        <a  href="{{ img_obj.image.url }}" download>
+                            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                                <span>Download</span>
+                            </button>
+                        </a>
                     {% endif %}
                 </div>
             </div>
