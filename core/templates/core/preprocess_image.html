@@ -1032,7 +1032,7 @@
         	clickPoints.push([evt.offsetX, evt.offsetY])
         	drawDot(evt.offsetX, evt.offsetY)
         	infoPoints.textContent = clickPoints.join(" : ")
-        	if (clickPoints.length >= 15) drawPoly(clickPoints)
+        	if (clickPoints.length >= 5) drawPoly(clickPoints)
         })
         
         // picker.addEventListener("change", evt => {
@@ -1051,12 +1051,16 @@
         const drawPoly = points => { // input is the `clickPoints` list
         	context.lineWidth = 1
         	// context.clearRect(0, 0, canvas.width, canvas.height)
-        	var split = points.splice(0, 15) // At position 0, remove 4 items
+        	var split = points.splice(0, 5) // At position 0, remove 4 items
         	
         	context.beginPath()
         	context.moveTo(split[0][0], split[0][1])
         	for(i of split.reverse()) context.lineTo(i[0], i[1])
         	context.stroke()
+            // context.fillStyle = "blue"
+            ctx.fillStyle = "rgba(0, 150, 0, 0.7)";
+            // ctx.fillRect(0, 0, 870, 500);
+            context.fill()
         }
         
         
