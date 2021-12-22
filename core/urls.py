@@ -45,7 +45,7 @@ urlpatterns = [
         views.remove_background_image, 
         name="removebackground"),
     path(
-        "generatecircle/<int:x>/",
+        "generatecircle/<int:x>/<int:y>/",
         views.generate_circle,
         name="generatecircle"),
 ]

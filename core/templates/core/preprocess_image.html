@@ -1033,7 +1033,7 @@
         function create_circle(x, y) {
             // alert("Create circle!");
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
-            $.get("{% url 'core:generatecircle' 1 %}", function(data){
+            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x).replace("9999999", y), function(data){
                 alert(data + " " + x + " " + y);
             });
         };

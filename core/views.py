@@ -302,7 +302,9 @@ def remove_background_image(
             'core/preprocess_image.html', 
             {'form': form})
 
-def generate_circle(request, x):
+def generate_circle(request, x, y):
     print('[**] In generate_circle, x: ', x)
-    print('[**] In generate_circle: ', request.GET.get('x')) # This is for the data send by AJAX request
+    print('[**] In generate_circle, y: ', y)
+    # print('[**] In generate_circle, y: ', y)
+    # print('[**] In generate_circle: ', request.GET.get('x')) # This is for the data send by AJAX request
     return HttpResponse("Draw regions")
