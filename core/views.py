@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.urls import reverse
@@ -301,3 +301,8 @@ def remove_background_image(
             request, 
             'core/preprocess_image.html', 
             {'form': form})
+
+def generate_circle(request, x):
+    print('[**] In generate_circle, x: ', x)
+    print('[**] In generate_circle: ', request.GET.get('x')) # This is for the data send by AJAX request
+    return HttpResponse("Draw regions")

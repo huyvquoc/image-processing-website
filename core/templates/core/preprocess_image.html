@@ -1028,11 +1028,22 @@
         // var zoomWindow = document.querySelector(".zoom")
         var clickPoints = [];
         
+        // https://stackoverflow.com/questions/15341285/how-do-i-call-a-django-function-on-button-click
+        // https://stackoverflow.com/questions/45724006/django-reverse-for-not-found-is-not-a-valid-view-function-or-pattern-na
+        function create_circle(x, y) {
+            // alert("Create circle!");
+            // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
+            $.get("{% url 'core:generatecircle' 1 %}", function(data){
+                alert(data + " " + x + " " + y);
+            });
+        };
+
         canvas.addEventListener("click", evt => {
         	clickPoints.push([evt.offsetX, evt.offsetY])
         	drawDot(evt.offsetX, evt.offsetY)
         	infoPoints.textContent = clickPoints.join(" : ")
-        	if (clickPoints.length >= 5) drawPoly(clickPoints)
+            create_circle(evt.offsetX, evt.offsetY);
+        	// if (clickPoints.length >= 5) drawPoly(clickPoints)
         })
         
         // picker.addEventListener("change", evt => {
