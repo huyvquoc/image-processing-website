@@ -798,6 +798,7 @@
         </div>
         <p id="demo"></p>
         <p class="points-info">No points yet</p>
+        <div id="result">No result</div>
         <br>
         <!-- <p><button onclick="myCanvas()">Try it</button></p>
         <br> -->
@@ -1034,7 +1035,14 @@
             // alert("Create circle!");
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
             $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x).replace("9999999", y), function(data){
-                alert(data + " " + x + " " + y);
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i][0] + " " + data[i][1]);
+                    // for (var j = 0; j < data[i].length; j++) {
+                    //     console.log(data[i][j]);
+                    // }
+                }
+                // console.log(data)
+                // alert(data + " " + x + " " + y);
             });
         };
 

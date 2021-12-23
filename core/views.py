@@ -1,3 +1,6 @@
+# Python
+import json
+
 # Django
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -307,4 +310,11 @@ def generate_circle(request, x, y):
     print('[**] In generate_circle, y: ', y)
     # print('[**] In generate_circle, y: ', y)
     # print('[**] In generate_circle: ', request.GET.get('x')) # This is for the data send by AJAX request
-    return HttpResponse("Draw regions")
+    # return HttpResponse("Draw regions")
+    # TODO: create list of points for drawing circle polygon
+    list_of_points = []
+    for x_axis in range(-20, 21, 5):
+        for y_axis in range(-20, 21, 5):
+            list_of_points.append((x + x_axis, y + y_axis))
+    print('[**] list_of_points: ', list_of_points)
+    return HttpResponse(json.dumps(list_of_points), content_type="application/json")
