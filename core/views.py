@@ -313,8 +313,12 @@ def generate_circle(request, x, y):
     # return HttpResponse("Draw regions")
     # TODO: create list of points for drawing circle polygon
     list_of_points = []
-    for x_axis in range(-20, 21, 5):
-        for y_axis in range(-20, 21, 5):
-            list_of_points.append((x + x_axis, y + y_axis))
+    # for x_axis in range(-10, 11, 5):
+    #     for y_axis in range(-10, 11, 5):
+    #         list_of_points.append((x + x_axis, y + y_axis))
+    x_axes = [-15, 0, 15, 15, 15, 0, -15, -15]
+    y_axes = [-15, -15, -15, 0, 15, 15, 15, 0]
+    for i in range(0, 8):
+        list_of_points.append((x + x_axes[i], y + y_axes[i]))
     print('[**] list_of_points: ', list_of_points)
     return HttpResponse(json.dumps(list_of_points), content_type="application/json")

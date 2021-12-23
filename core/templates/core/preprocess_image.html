@@ -1034,20 +1034,24 @@
         function create_circle(x, y) {
             // alert("Create circle!");
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
+            var polyPoints = [];
             $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x).replace("9999999", y), function(data){
                 for (var i = 0; i < data.length; i++) {
-                    console.log(data[i][0] + " " + data[i][1]);
+                    // console.log(data[i][0] + " " + data[i][1]);
+                    polyPoints.push([data[i][0], data[i][1]]);
+                    drawDot(data[i][0], data[i][1]);
                     // for (var j = 0; j < data[i].length; j++) {
                     //     console.log(data[i][j]);
                     // }
                 }
+                drawPoly(polyPoints);
                 // console.log(data)
                 // alert(data + " " + x + " " + y);
             });
         };
 
         canvas.addEventListener("click", evt => {
-        	clickPoints.push([evt.offsetX, evt.offsetY])
+        	// clickPoints.push([evt.offsetX, evt.offsetY])
         	drawDot(evt.offsetX, evt.offsetY)
         	infoPoints.textContent = clickPoints.join(" : ")
             create_circle(evt.offsetX, evt.offsetY);
@@ -1061,8 +1065,9 @@
         // draw a dot.
         const drawDot = (x, y) => {
             context.strokeStyle = "blue";
+            ctx.fillStyle = "#FF0000";
         	context.beginPath()
-        	context.arc(x, y, 2, 0, 2*Math.PI)
+        	context.arc(x, y, 3, 0, 2*Math.PI)
         	context.fill()
         }
 
@@ -1070,7 +1075,8 @@
         const drawPoly = points => { // input is the `clickPoints` list
         	context.lineWidth = 1
         	// context.clearRect(0, 0, canvas.width, canvas.height)
-        	var split = points.splice(0, 5) // At position 0, remove 4 items
+        	// var split = points.splice(0, 5) // At position 0, remove 4 items
+            var split = points
         	
         	context.beginPath()
         	context.moveTo(split[0][0], split[0][1])
