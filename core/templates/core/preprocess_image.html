@@ -806,7 +806,8 @@
         <canvas id="myCanvas2" width="480" height="320" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: crosshair;"></canvas>
         <p><button onclick="myCanvas()">Try it</button></p> -->
 
-        <!-- <canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas> -->
+        <canvas id="myCanvas3" width="900" height="900" style="border:1px solid #000000;"></canvas>
+        <p id="demo3"></p>
 
         <div class="slide-show-box">
             <h1>Photo Collection</h1>
@@ -952,6 +953,13 @@
             document.getElementById("demo").innerHTML = coor;
             // alert("X coordinate: " + x + ", Y coordinate: " + y);
         });
+        $("#myCanvas3").on("click", function(event) {
+            var x = event.pageX - this.offsetLeft;
+            var y = event.pageY - this.offsetTop;
+            var coor = "X coords: " + x + ", Y coords: " + y;
+            document.getElementById("demo3").innerHTML = coor;
+            // alert("X coordinate: " + x + ", Y coordinate: " + y);
+        });
     });
     function showCoords(event) {
         var x = event.clientX - event.offsetLeft;
@@ -964,7 +972,7 @@
     }
     </script>
 
-    <script>
+    <!-- <script>
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
 
@@ -996,7 +1004,7 @@
         var ctx = c.getContext("2d");
         ctx.font = "30px Arial";
         ctx.strokeText("Hello World", 10, 50);
-    </script>
+    </script> -->
     <!-- Load image on canvas-->
     <script>
         var c = document.getElementById("myCanvas2");
@@ -1022,12 +1030,14 @@
     </script> -->
     <!-------------------->
     <script>
-        var canvas = document.querySelector("canvas");
+        // var canvas = document.querySelector("canvas");
+        var canvas = document.getElementById("myCanvas2");
         var context = canvas.getContext("2d");
         var infoPoints = document.querySelector(".points-info");
         // var picker = document.querySelector("input")
         // var zoomWindow = document.querySelector(".zoom")
         var clickPoints = [];
+        var listOfPolys = []; // list of all drawn polygons
         
         // https://stackoverflow.com/questions/15341285/how-do-i-call-a-django-function-on-button-click
         // https://stackoverflow.com/questions/45724006/django-reverse-for-not-found-is-not-a-valid-view-function-or-pattern-na
@@ -1048,6 +1058,7 @@
                 // console.log(data)
                 // alert(data + " " + x + " " + y);
             });
+            listOfPolys.push(polyPoints);
         };
 
         canvas.addEventListener("click", evt => {
@@ -1056,6 +1067,7 @@
         	infoPoints.textContent = clickPoints.join(" : ")
             create_circle(evt.offsetX, evt.offsetY);
         	// if (clickPoints.length >= 5) drawPoly(clickPoints)
+            console.log(listOfPolys);
         })
         
         // picker.addEventListener("change", evt => {
@@ -1065,7 +1077,7 @@
         // draw a dot.
         const drawDot = (x, y) => {
             context.strokeStyle = "blue";
-            ctx.fillStyle = "#FF0000";
+            context.fillStyle = "#FF0000";
         	context.beginPath()
         	context.arc(x, y, 3, 0, 2*Math.PI)
         	context.fill()
@@ -1083,7 +1095,7 @@
         	for(i of split.reverse()) context.lineTo(i[0], i[1])
         	context.stroke()
             // context.fillStyle = "blue"
-            ctx.fillStyle = "rgba(0, 150, 0, 0.7)";
+            context.fillStyle = "rgba(0, 150, 0, 0.7)";
             // ctx.fillRect(0, 0, 870, 500);
             context.fill()
         }
@@ -1126,6 +1138,164 @@
         // 	zoomWindow.style.backgroundPosition = x + "% " + y + "%"
         // 	zoomWindow.position.top = x + "px"
         // }
+
+    </script>
+    <script>
+        // ========== Dragging drawn dots ==========
+        var myCanvas3 = document.getElementById("myCanvas3");
+        var ctx3 = myCanvas3.getContext("2d");
+        var $myCanvas3 = $("#myCanvas3");
+        var canvasOffset = $myCanvas3.offset();
+        var offsetX = canvasOffset.left;
+        var offsetY = canvasOffset.top;
+        // var offsetX = 0;
+        // var offsetY = 0;
+        console.log("Offset x, y: " + offsetX + ", " + offsetY);
+        var scrollX = $myCanvas3.scrollLeft();
+        var scrollY = $myCanvas3.scrollTop();
+        console.log("Scroll x, y: " + scrollX + ", " + scrollY);
+        var cw = myCanvas3.width;
+        var ch = myCanvas3.height;
+        console.log("Width: " + cw);
+        console.log("Height: " + ch);
+        
+        // flag to indicate a drag is in process
+        // and the last XY position that has already been processed
+        var isDown = false;
+        var lastX;
+        var lastY;
+        
+        // the radian value of a full circle is used often, cache it
+        var PI2 = Math.PI * 2;
+        
+        // variables relating to existing circles
+        var circles = [];
+        var stdRadius = 10;
+        var draggingCircle = -1;
+        
+        
+        // clear the canvas and redraw all existing circles
+        function drawAll() {
+            ctx3.clearRect(0, 0, cw, ch);
+            for (var i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+                ctx3.beginPath();
+                ctx3.arc(circle.x, circle.y, circle.radius, 0, PI2);
+                ctx3.closePath();
+                ctx3.fillStyle = circle.color;
+                ctx3.fill();
+            }
+        }
+        
+        function handleMouseDown(e) {
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // save the mouse position
+            // in case this becomes a drag operation
+            // lastX = parseInt(e.clientX - offsetX);
+            // lastY = parseInt(e.clientY - offsetY);
+            lastX = parseInt(e.offsetX);
+            lastY = parseInt(e.offsetY);
+            console.log("e.offset x, y: " + e.offsetX + ", " + e.offsetY);
+        
+            // hit test all existing circles
+            var hit = -1;
+            for (var i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+                var dx = lastX - circle.x;
+                var dy = lastY - circle.y;
+                if (dx * dx + dy * dy < circle.radius * circle.radius) { // Check if a point click is inside a circle: (x - x0)**2 + (y - y0)**2 < r**2
+                    hit = i;
+                }
+            }
+        
+            // if no hits then add a circle
+            // if hit then set the isDown flag to start a drag
+            if (hit < 0) {
+                circles.push({
+                    x: lastX,
+                    y: lastY,
+                    radius: stdRadius,
+                    color: randomColor()
+                });
+                drawAll();
+            } else {
+                draggingCircle = circles[hit];
+                isDown = true;
+                console.log("In MouseDown, isDown: ", isDown);
+            }
+        
+        }
+        
+        function handleMouseUp(e) {
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // stop the drag
+            isDown = false;
+            console.log("In MouseUp, isDown: ", isDown);
+        }
+        
+        function handleMouseMove(e) {
+        
+            // if we're not dragging, just exit
+            if (!isDown) {
+                return;
+            }
+        
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // get the current mouse position
+            // mouseX = parseInt(e.clientX - offsetX);
+            // mouseY = parseInt(e.clientY - offsetY);
+            mouseX = parseInt(e.offsetX);
+            mouseY = parseInt(e.offsetY);
+        
+            // calculate how far the mouse has moved
+            // since the last mousemove event was processed
+            var dx = mouseX - lastX;
+            var dy = mouseY - lastY;
+        
+            // reset the lastX/Y to the current mouse position
+            lastX = mouseX;
+            lastY = mouseY;
+        
+            // change the target circles position by the 
+            // distance the mouse has moved since the last
+            // mousemove event
+            draggingCircle.x += dx;
+            draggingCircle.y += dy;
+        
+            // redraw all the circles
+            drawAll();
+        }
+        
+        // listen for mouse events
+        $("#myCanvas3").mousedown(function (e) {
+            // alert("Hello");
+            handleMouseDown(e);
+        });
+        $("#myCanvas3").mousemove(function (e) {
+            handleMouseMove(e);
+        });
+        $("#myCanvas3").mouseup(function (e) {
+            handleMouseUp(e);
+        });
+        $("#myCanvas3").mouseout(function (e) {
+            handleMouseUp(e);
+        });
+
+        //////////////////////
+        // Utility functions
+        function randomColor() {
+            return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+        }
+        // =====================================
     </script>
 
     </body>
