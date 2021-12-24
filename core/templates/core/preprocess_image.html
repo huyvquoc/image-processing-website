@@ -1037,6 +1037,7 @@
         // var picker = document.querySelector("input")
         // var zoomWindow = document.querySelector(".zoom")
         var clickPoints = [];
+        var polyPoints = [];
         var listOfPolys = []; // list of all drawn polygons
         // ===== For moving points =====
         var cw = canvas.width;
@@ -1066,32 +1067,43 @@
                 radius: stdRadius,
                 color: color
             });
-            var polyPoints = [];
-            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), function(data){
-                // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
-                console.log("data.length: " + data.length);
-                for (var i = 0; i < data.length; i++) {
-                    // console.log(data[i][0] + " " + data[i][1]);
-                    polyPoints.push([data[i][0], data[i][1]]);
-                    // drawDot(data[i][0], data[i][1]);
-                    // for (var j = 0; j < data[i].length; j++) {
-                    //     console.log(data[i][j]);
-                    // }
-                    circles.push({
-                        x: data[i][0],
-                        y: data[i][1],
-                        radius: stdRadius,
-                        color: color
-                    });
-                }
-                // drawPoly(polyPoints);
-                // console.log(data)
-                // alert(data + " " + x + " " + y);
-                // listOfPolys.push(polyPoints);
+
+            // === Send synchronous request to Django view function ===
+            $.ajaxSetup({
+                async: false
             });
-            console.log(circles);
-            listOfPolys.push(polyPoints);
+            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) {
+                // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
+                push_segmented_points_into_lists(data, color);
+            });
+            $.ajaxSetup({
+                async: true
+            });
+            // ======================================================
         };
+
+        function push_segmented_points_into_lists(data, color) {
+            console.log("data.length: " + data.length);
+            for (var i = 0; i < data.length; i++) {
+                // console.log(data[i][0] + " " + data[i][1]);
+                polyPoints.push([data[i][0], data[i][1]]);
+                // drawDot(data[i][0], data[i][1]);
+                // for (var j = 0; j < data[i].length; j++) {
+                //     console.log(data[i][j]);
+                // }
+                circles.push({
+                    x: data[i][0],
+                    y: data[i][1],
+                    radius: stdRadius,
+                    color: color
+                });
+            }
+            // drawPoly(polyPoints);
+            // console.log(data)
+            // alert(data + " " + x + " " + y);
+            // listOfPolys.push(polyPoints);
+            listOfPolys.push(polyPoints);
+        }
         // ====== For moving points =====
         function drawAll() {
             context.clearRect(0, 0, cw, ch);
