@@ -782,7 +782,7 @@
                 <!-- <div> -->
                     <!-- <img id="inp" src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px" ismap> -->
                 <!-- </div> -->
-                <canvas id="myCanvas2" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: crosshair;"></canvas>
+                <canvas id="myCanvas2" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: default;"></canvas>
             {% endif %}
             {% if new_img_obj %}
                 <div>
@@ -806,8 +806,8 @@
         <canvas id="myCanvas2" width="480" height="320" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: crosshair;"></canvas>
         <p><button onclick="myCanvas()">Try it</button></p> -->
 
-        <canvas id="myCanvas3" width="900" height="900" style="border:1px solid #000000;"></canvas>
-        <p id="demo3"></p>
+        <!-- <canvas id="myCanvas3" width="900" height="900" style="border:1px solid #000000;"></canvas>
+        <p id="demo3"></p> -->
 
         <div class="slide-show-box">
             <h1>Photo Collection</h1>
@@ -1038,37 +1038,202 @@
         // var zoomWindow = document.querySelector(".zoom")
         var clickPoints = [];
         var listOfPolys = []; // list of all drawn polygons
+        // ===== For moving points =====
+        var cw = canvas.width;
+        var ch = canvas.height;
+        // // flag to indicate a drag is in process
+        // // and the last XY position that has already been processed
+        var isDown = false;
+        var lastX;
+        var lastY;
+        
+        // // the radian value of a full circle is used often, cache it
+        var PI2 = Math.PI * 2;
+        
+        // // variables relating to existing circles
+        var circles = [];
+        var stdRadius = 7;
+        var draggingCircle = -1;
         
         // https://stackoverflow.com/questions/15341285/how-do-i-call-a-django-function-on-button-click
         // https://stackoverflow.com/questions/45724006/django-reverse-for-not-found-is-not-a-valid-view-function-or-pattern-na
-        function create_circle(x, y) {
+        function create_circle(x_center, y_center, color) {
             // alert("Create circle!");
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
+            circles.push({
+                x: x_center,
+                y: y_center,
+                radius: stdRadius,
+                color: color
+            });
             var polyPoints = [];
-            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x).replace("9999999", y), function(data){
+            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), function(data){
+                // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
+                console.log("data.length: " + data.length);
                 for (var i = 0; i < data.length; i++) {
                     // console.log(data[i][0] + " " + data[i][1]);
                     polyPoints.push([data[i][0], data[i][1]]);
-                    drawDot(data[i][0], data[i][1]);
+                    // drawDot(data[i][0], data[i][1]);
                     // for (var j = 0; j < data[i].length; j++) {
                     //     console.log(data[i][j]);
                     // }
+                    circles.push({
+                        x: data[i][0],
+                        y: data[i][1],
+                        radius: stdRadius,
+                        color: color
+                    });
                 }
-                drawPoly(polyPoints);
+                // drawPoly(polyPoints);
                 // console.log(data)
                 // alert(data + " " + x + " " + y);
+                // listOfPolys.push(polyPoints);
             });
+            console.log(circles);
             listOfPolys.push(polyPoints);
         };
+        // ====== For moving points =====
+        function drawAll() {
+            context.clearRect(0, 0, cw, ch);
+            for (var i = 0; i < circles.length; i++) {
+                var circle = circles[i];
+                context.beginPath();
+                context.arc(circle.x, circle.y, circle.radius, 0, PI2);
+                context.closePath();
+                context.fillStyle = circle.color;
+                context.fill();
+            }
+        }
+        
+        function handleMouseDown(e) {
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // save the mouse position
+            // in case this becomes a drag operation
+            // lastX = parseInt(e.clientX - offsetX);
+            // lastY = parseInt(e.clientY - offsetY);
+            lastX = parseInt(e.offsetX);
+            lastY = parseInt(e.offsetY);
+            // console.log("e.offset x, y: " + e.offsetX + ", " + e.offsetY);
+        
+            // hit test all existing circles
+            var hit = -1;
+            // for (var i = 0; i < circles.length; i++) {
+            //     var circle = circles[i];
+            //     var dx = lastX - circle.x;
+            //     var dy = lastY - circle.y;
+            //     if (dx * dx + dy * dy < circle.radius * circle.radius) { // Check if a point click is inside a circle: (x - x0)**2 + (y - y0)**2 < r**2
+            //         hit = i;
+            //     }
+            // }
+            // for (var i = 0; i < listOfPolys.length; i++) {
+            //     for (var j = 0; j < listOfPolys[i].length; j++) {
+            //         var circle = listOfPolys[i][j];
+            //         var dx = lastX - circle.x;
+            //         var dy = lastY - circle.y;
+            //         if (dx * dx + dy * dy < circle.radius * circle.radius) {
+            //             hit = i;
+            //         }
+            //     }
+            // }
+        
+            // if no hits then add a circle
+            // if hit then set the isDown flag to start a drag
+            if (hit < 0) {
+        	    clickPoints.push([e.offsetX, e.offsetY])
+        	    // drawDot(e.offsetX, e.offsetY)
+        	    infoPoints.textContent = clickPoints.join(" : ")
+                create_circle(e.offsetX, e.offsetY, randomColor());
+        	    // if (clickPoints.length >= 5) drawPoly(clickPoints)
+                console.log(circles);
+                console.log("circles.length: " + circles.length);
+                console.log(listOfPolys);
+                console.log("listOfPolys.length: " + listOfPolys.length);
+                drawAll();
+            } else {
+                draggingCircle = circles[hit];
+                isDown = true;
+                // console.log("In MouseDown, isDown: ", isDown);
+            }
+        
+        }
+        
+        function handleMouseUp(e) {
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // stop the drag
+            isDown = false;
+            // console.log("In MouseUp, isDown: ", isDown);
+        }
+        
+        function handleMouseMove(e) {
+        
+            // if we're not dragging, just exit
+            if (!isDown) {
+                return;
+            }
+        
+            // tell the browser we'll handle this event
+            e.preventDefault();
+            e.stopPropagation();
+        
+            // get the current mouse position
+            // mouseX = parseInt(e.clientX - offsetX);
+            // mouseY = parseInt(e.clientY - offsetY);
+            mouseX = parseInt(e.offsetX);
+            mouseY = parseInt(e.offsetY);
+        
+            // calculate how far the mouse has moved
+            // since the last mousemove event was processed
+            var dx = mouseX - lastX;
+            var dy = mouseY - lastY;
+        
+            // reset the lastX/Y to the current mouse position
+            lastX = mouseX;
+            lastY = mouseY;
+        
+            // change the target circles position by the 
+            // distance the mouse has moved since the last
+            // mousemove event
+            draggingCircle.x += dx;
+            draggingCircle.y += dy;
+        
+            // redraw all the circles
+            drawAll();
+        }
 
-        canvas.addEventListener("click", evt => {
-        	// clickPoints.push([evt.offsetX, evt.offsetY])
-        	drawDot(evt.offsetX, evt.offsetY)
-        	infoPoints.textContent = clickPoints.join(" : ")
-            create_circle(evt.offsetX, evt.offsetY);
-        	// if (clickPoints.length >= 5) drawPoly(clickPoints)
-            console.log(listOfPolys);
-        })
+        // // Utility functions
+        function randomColor() {
+            return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+        }
+        
+        // listen for mouse events
+        $("#myCanvas2").mousedown(function (e) {
+            // alert("Hello");
+            handleMouseDown(e);
+        });
+        // $("#myCanvas2").mousemove(function (e) {
+        //     handleMouseMove(e);
+        // });
+        // $("#myCanvas2").mouseup(function (e) {
+        //     handleMouseUp(e);
+        // });
+        // $("#myCanvas2").mouseout(function (e) {
+        //     handleMouseUp(e);
+        // });
+
+        // canvas.addEventListener("click", evt => {
+        // 	// clickPoints.push([evt.offsetX, evt.offsetY])
+        // 	drawDot(evt.offsetX, evt.offsetY)
+        // 	infoPoints.textContent = clickPoints.join(" : ")
+        //     create_circle(evt.offsetX, evt.offsetY);
+        // 	// if (clickPoints.length >= 5) drawPoly(clickPoints)
+        //     console.log(listOfPolys);
+        // })
         
         // picker.addEventListener("change", evt => {
         // 	newImage(evt.target.value)
@@ -1079,7 +1244,7 @@
             context.strokeStyle = "blue";
             context.fillStyle = "#FF0000";
         	context.beginPath()
-        	context.arc(x, y, 3, 0, 2*Math.PI)
+        	context.arc(x, y, 7, 0, 2*Math.PI)
         	context.fill()
         }
 
@@ -1142,159 +1307,159 @@
     </script>
     <script>
         // ========== Dragging drawn dots ==========
-        var myCanvas3 = document.getElementById("myCanvas3");
-        var ctx3 = myCanvas3.getContext("2d");
-        var $myCanvas3 = $("#myCanvas3");
-        var canvasOffset = $myCanvas3.offset();
-        var offsetX = canvasOffset.left;
-        var offsetY = canvasOffset.top;
-        // var offsetX = 0;
-        // var offsetY = 0;
-        console.log("Offset x, y: " + offsetX + ", " + offsetY);
-        var scrollX = $myCanvas3.scrollLeft();
-        var scrollY = $myCanvas3.scrollTop();
-        console.log("Scroll x, y: " + scrollX + ", " + scrollY);
-        var cw = myCanvas3.width;
-        var ch = myCanvas3.height;
-        console.log("Width: " + cw);
-        console.log("Height: " + ch);
+        // var myCanvas3 = document.getElementById("myCanvas3");
+        // var ctx3 = myCanvas3.getContext("2d");
+        // var $myCanvas3 = $("#myCanvas3");
+        // var canvasOffset = $myCanvas3.offset();
+        // var offsetX = canvasOffset.left;
+        // var offsetY = canvasOffset.top;
+        // // var offsetX = 0;
+        // // var offsetY = 0;
+        // // console.log("Offset x, y: " + offsetX + ", " + offsetY);
+        // var scrollX = $myCanvas3.scrollLeft();
+        // var scrollY = $myCanvas3.scrollTop();
+        // // console.log("Scroll x, y: " + scrollX + ", " + scrollY);
+        // var cw = myCanvas3.width;
+        // var ch = myCanvas3.height;
+        // // console.log("Width: " + cw);
+        // // console.log("Height: " + ch);
         
-        // flag to indicate a drag is in process
-        // and the last XY position that has already been processed
-        var isDown = false;
-        var lastX;
-        var lastY;
+        // // flag to indicate a drag is in process
+        // // and the last XY position that has already been processed
+        // var isDown = false;
+        // var lastX;
+        // var lastY;
         
-        // the radian value of a full circle is used often, cache it
-        var PI2 = Math.PI * 2;
+        // // the radian value of a full circle is used often, cache it
+        // var PI2 = Math.PI * 2;
         
-        // variables relating to existing circles
-        var circles = [];
-        var stdRadius = 10;
-        var draggingCircle = -1;
+        // // variables relating to existing circles
+        // var circles = [];
+        // var stdRadius = 10;
+        // var draggingCircle = -1;
         
         
-        // clear the canvas and redraw all existing circles
-        function drawAll() {
-            ctx3.clearRect(0, 0, cw, ch);
-            for (var i = 0; i < circles.length; i++) {
-                var circle = circles[i];
-                ctx3.beginPath();
-                ctx3.arc(circle.x, circle.y, circle.radius, 0, PI2);
-                ctx3.closePath();
-                ctx3.fillStyle = circle.color;
-                ctx3.fill();
-            }
-        }
+        // // clear the canvas and redraw all existing circles
+        // function drawAll() {
+        //     ctx3.clearRect(0, 0, cw, ch);
+        //     for (var i = 0; i < circles.length; i++) {
+        //         var circle = circles[i];
+        //         ctx3.beginPath();
+        //         ctx3.arc(circle.x, circle.y, circle.radius, 0, PI2);
+        //         ctx3.closePath();
+        //         ctx3.fillStyle = circle.color;
+        //         ctx3.fill();
+        //     }
+        // }
         
-        function handleMouseDown(e) {
-            // tell the browser we'll handle this event
-            e.preventDefault();
-            e.stopPropagation();
+        // function handleMouseDown(e) {
+        //     // tell the browser we'll handle this event
+        //     e.preventDefault();
+        //     e.stopPropagation();
         
-            // save the mouse position
-            // in case this becomes a drag operation
-            // lastX = parseInt(e.clientX - offsetX);
-            // lastY = parseInt(e.clientY - offsetY);
-            lastX = parseInt(e.offsetX);
-            lastY = parseInt(e.offsetY);
-            console.log("e.offset x, y: " + e.offsetX + ", " + e.offsetY);
+        //     // save the mouse position
+        //     // in case this becomes a drag operation
+        //     // lastX = parseInt(e.clientX - offsetX);
+        //     // lastY = parseInt(e.clientY - offsetY);
+        //     lastX = parseInt(e.offsetX);
+        //     lastY = parseInt(e.offsetY);
+        //     // console.log("e.offset x, y: " + e.offsetX + ", " + e.offsetY);
         
-            // hit test all existing circles
-            var hit = -1;
-            for (var i = 0; i < circles.length; i++) {
-                var circle = circles[i];
-                var dx = lastX - circle.x;
-                var dy = lastY - circle.y;
-                if (dx * dx + dy * dy < circle.radius * circle.radius) { // Check if a point click is inside a circle: (x - x0)**2 + (y - y0)**2 < r**2
-                    hit = i;
-                }
-            }
+        //     // hit test all existing circles
+        //     var hit = -1;
+        //     for (var i = 0; i < circles.length; i++) {
+        //         var circle = circles[i];
+        //         var dx = lastX - circle.x;
+        //         var dy = lastY - circle.y;
+        //         if (dx * dx + dy * dy < circle.radius * circle.radius) { // Check if a point click is inside a circle: (x - x0)**2 + (y - y0)**2 < r**2
+        //             hit = i;
+        //         }
+        //     }
         
-            // if no hits then add a circle
-            // if hit then set the isDown flag to start a drag
-            if (hit < 0) {
-                circles.push({
-                    x: lastX,
-                    y: lastY,
-                    radius: stdRadius,
-                    color: randomColor()
-                });
-                drawAll();
-            } else {
-                draggingCircle = circles[hit];
-                isDown = true;
-                console.log("In MouseDown, isDown: ", isDown);
-            }
+        //     // if no hits then add a circle
+        //     // if hit then set the isDown flag to start a drag
+        //     if (hit < 0) {
+        //         circles.push({
+        //             x: lastX,
+        //             y: lastY,
+        //             radius: stdRadius,
+        //             color: randomColor()
+        //         });
+        //         drawAll();
+        //     } else {
+        //         draggingCircle = circles[hit];
+        //         isDown = true;
+        //         // console.log("In MouseDown, isDown: ", isDown);
+        //     }
         
-        }
+        // }
         
-        function handleMouseUp(e) {
-            // tell the browser we'll handle this event
-            e.preventDefault();
-            e.stopPropagation();
+        // function handleMouseUp(e) {
+        //     // tell the browser we'll handle this event
+        //     e.preventDefault();
+        //     e.stopPropagation();
         
-            // stop the drag
-            isDown = false;
-            console.log("In MouseUp, isDown: ", isDown);
-        }
+        //     // stop the drag
+        //     isDown = false;
+        //     // console.log("In MouseUp, isDown: ", isDown);
+        // }
         
-        function handleMouseMove(e) {
+        // function handleMouseMove(e) {
         
-            // if we're not dragging, just exit
-            if (!isDown) {
-                return;
-            }
+        //     // if we're not dragging, just exit
+        //     if (!isDown) {
+        //         return;
+        //     }
         
-            // tell the browser we'll handle this event
-            e.preventDefault();
-            e.stopPropagation();
+        //     // tell the browser we'll handle this event
+        //     e.preventDefault();
+        //     e.stopPropagation();
         
-            // get the current mouse position
-            // mouseX = parseInt(e.clientX - offsetX);
-            // mouseY = parseInt(e.clientY - offsetY);
-            mouseX = parseInt(e.offsetX);
-            mouseY = parseInt(e.offsetY);
+        //     // get the current mouse position
+        //     // mouseX = parseInt(e.clientX - offsetX);
+        //     // mouseY = parseInt(e.clientY - offsetY);
+        //     mouseX = parseInt(e.offsetX);
+        //     mouseY = parseInt(e.offsetY);
         
-            // calculate how far the mouse has moved
-            // since the last mousemove event was processed
-            var dx = mouseX - lastX;
-            var dy = mouseY - lastY;
+        //     // calculate how far the mouse has moved
+        //     // since the last mousemove event was processed
+        //     var dx = mouseX - lastX;
+        //     var dy = mouseY - lastY;
         
-            // reset the lastX/Y to the current mouse position
-            lastX = mouseX;
-            lastY = mouseY;
+        //     // reset the lastX/Y to the current mouse position
+        //     lastX = mouseX;
+        //     lastY = mouseY;
         
-            // change the target circles position by the 
-            // distance the mouse has moved since the last
-            // mousemove event
-            draggingCircle.x += dx;
-            draggingCircle.y += dy;
+        //     // change the target circles position by the 
+        //     // distance the mouse has moved since the last
+        //     // mousemove event
+        //     draggingCircle.x += dx;
+        //     draggingCircle.y += dy;
         
-            // redraw all the circles
-            drawAll();
-        }
+        //     // redraw all the circles
+        //     drawAll();
+        // }
         
-        // listen for mouse events
-        $("#myCanvas3").mousedown(function (e) {
-            // alert("Hello");
-            handleMouseDown(e);
-        });
-        $("#myCanvas3").mousemove(function (e) {
-            handleMouseMove(e);
-        });
-        $("#myCanvas3").mouseup(function (e) {
-            handleMouseUp(e);
-        });
-        $("#myCanvas3").mouseout(function (e) {
-            handleMouseUp(e);
-        });
+        // // listen for mouse events
+        // $("#myCanvas3").mousedown(function (e) {
+        //     // alert("Hello");
+        //     handleMouseDown(e);
+        // });
+        // $("#myCanvas3").mousemove(function (e) {
+        //     handleMouseMove(e);
+        // });
+        // $("#myCanvas3").mouseup(function (e) {
+        //     handleMouseUp(e);
+        // });
+        // $("#myCanvas3").mouseout(function (e) {
+        //     handleMouseUp(e);
+        // });
 
-        //////////////////////
-        // Utility functions
-        function randomColor() {
-            return ('#' + Math.floor(Math.random() * 16777215).toString(16));
-        }
+        // //////////////////////
+        // // Utility functions
+        // function randomColor() {
+        //     return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+        // }
         // =====================================
     </script>
 
