@@ -985,7 +985,7 @@
         
         // https://stackoverflow.com/questions/15341285/how-do-i-call-a-django-function-on-button-click
         // https://stackoverflow.com/questions/45724006/django-reverse-for-not-found-is-not-a-valid-view-function-or-pattern-na
-        function create_circle(x_center, y_center, color) {
+        function create_circle(x_center, y_center) {
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
             // circles.push({
             //     x: x_center,
@@ -1000,7 +1000,7 @@
             });
             $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) { // TODO: change to post
                 // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
-                push_segmented_points_into_lists(data, color);
+                push_segmented_points_into_lists(data, randomColor());
             });
             $.ajaxSetup({
                 async: true
@@ -1073,7 +1073,7 @@
         	    clickPoints.push([e.offsetX, e.offsetY])
         	    // drawDot(e.offsetX, e.offsetY)
         	    infoPoints.textContent = clickPoints.join(" : ")
-                create_circle(e.offsetX, e.offsetY, randomColor());
+                create_circle(e.offsetX, e.offsetY);
         	    // if (clickPoints.length >= 5) drawPoly(clickPoints)
                 drawAll();
             } else {
@@ -1129,7 +1129,13 @@
 
         // // Utility functions
         function randomColor() {
-            return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+            // return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+            var r = Math.floor(Math.random()*255);
+            var g = Math.floor(Math.random()*255);
+            var b = Math.floor(Math.random()*255);
+            // return 'rgba(red, green, blue, opacity)'.replace('red', r).replace('green', g).replace('blue', b);
+            var color = "rgba(" + [r, g, b, 1.0].join(',') + ")";
+            return color;
         }
         
         // listen for mouse events
@@ -1170,7 +1176,7 @@
         }
 
         // draw polygon from a list of 4 points
-        const drawPoly = points => { // input is the `clickPoints` list
+        function drawPoly(points) { // input is the `clickPoints` list
         	context.lineWidth = 1
         	// context.clearRect(0, 0, canvas.width, canvas.height)
         	// var split = points.splice(0, 5) // At position 0, remove 4 items
@@ -1179,9 +1185,13 @@
         	context.beginPath()
         	context.moveTo(split[0].x, split[0].y)
         	for(i of split) context.lineTo(i.x, i.y)
+            context.lineTo(split[0].x, split[0].y)
         	context.stroke()
             // context.fillStyle = "blue"
-            context.fillStyle = "rgba(0, 150, 0, 0.7)"
+            var color = points[0].color;
+            context.fillStyle = color.replace('1)', '0.4)');
+            console.log(context.fillStyle)
+            console.log(points[0].color)
             // ctx.fillRect(0, 0, 870, 500)
             context.fill()
         }
