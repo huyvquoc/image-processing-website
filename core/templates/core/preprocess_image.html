@@ -1037,8 +1037,8 @@
         // var picker = document.querySelector("input")
         // var zoomWindow = document.querySelector(".zoom")
         var clickPoints = [];
-        var polyPoints = [];
         var listOfPolys = []; // list of all drawn polygons
+        var listOfCircles = [];
         // ===== For moving points =====
         var cw = canvas.width;
         var ch = canvas.height;
@@ -1052,7 +1052,7 @@
         var PI2 = Math.PI * 2;
         
         // // variables relating to existing circles
-        var circles = [];
+        // var circles = [];
         var stdRadius = 7;
         var draggingCircle = -1;
         
@@ -1061,18 +1061,18 @@
         function create_circle(x_center, y_center, color) {
             // alert("Create circle!");
             // TRY: Replace the below with ajax: https://stackoverflow.com/questions/24854943/get-the-click-event-from-a-button-in-a-django-view
-            circles.push({
-                x: x_center,
-                y: y_center,
-                radius: stdRadius,
-                color: color
-            });
+            // circles.push({
+            //     x: x_center,
+            //     y: y_center,
+            //     radius: stdRadius,
+            //     color: color
+            // });
 
             // === Send synchronous request to Django view function ===
             $.ajaxSetup({
                 async: false
             });
-            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) {
+            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) { // TODO: change to post
                 // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
                 push_segmented_points_into_lists(data, color);
             });
@@ -1083,7 +1083,9 @@
         };
 
         function push_segmented_points_into_lists(data, color) {
-            console.log("data.length: " + data.length);
+            var polyPoints = [];
+            var circles = [];
+            // console.log("data.length: " + data.length);
             for (var i = 0; i < data.length; i++) {
                 // console.log(data[i][0] + " " + data[i][1]);
                 polyPoints.push([data[i][0], data[i][1]]);
@@ -1103,17 +1105,34 @@
             // alert(data + " " + x + " " + y);
             // listOfPolys.push(polyPoints);
             listOfPolys.push(polyPoints);
+            listOfCircles.push(circles);
         }
         // ====== For moving points =====
+        // function drawAll() {
+        //     context.clearRect(0, 0, cw, ch);
+        //     for (var i = 0; i < circles.length; i++) {
+        //         var circle = circles[i];
+        //         context.beginPath();
+        //         context.arc(circle.x, circle.y, circle.radius, 0, PI2);
+        //         context.closePath();
+        //         context.fillStyle = circle.color;
+        //         context.fill();
+        //     }
+        // }
         function drawAll() {
             context.clearRect(0, 0, cw, ch);
-            for (var i = 0; i < circles.length; i++) {
-                var circle = circles[i];
-                context.beginPath();
-                context.arc(circle.x, circle.y, circle.radius, 0, PI2);
-                context.closePath();
-                context.fillStyle = circle.color;
-                context.fill();
+            for (var i = 0; i < listOfCircles.length; i++) {
+                // 1) Draw points that construct a poly
+                for ( var j = 0; j < listOfCircles[i].length; j++) {
+                    var circle = listOfCircles[i][j];
+                    context.beginPath();
+                    context.arc(circle.x, circle.y, circle.radius, 0, PI2);
+                    context.closePath();
+                    context.fillStyle = circle.color;
+                    context.fill();
+                }
+                // 2) Draw the poly
+                drawPoly(listOfPolys[i]);
             }
         }
         
@@ -1140,16 +1159,17 @@
             //         hit = i;
             //     }
             // }
-            // for (var i = 0; i < listOfPolys.length; i++) {
-            //     for (var j = 0; j < listOfPolys[i].length; j++) {
-            //         var circle = listOfPolys[i][j];
-            //         var dx = lastX - circle.x;
-            //         var dy = lastY - circle.y;
-            //         if (dx * dx + dy * dy < circle.radius * circle.radius) {
-            //             hit = i;
-            //         }
-            //     }
-            // }
+            for (var i = 0; i < listOfCircles.length; i++) {
+                for (var j = 0; j < listOfCircles[i].length; j++) {
+                    var circle = listOfCircles[i][j];
+                    var dx = lastX - circle.x;
+                    var dy = lastY - circle.y;
+                    if (dx * dx + dy * dy < circle.radius * circle.radius) {
+                        hit = [i, j];
+                    }
+                }
+            }
+            console.log(hit);
         
             // if no hits then add a circle
             // if hit then set the isDown flag to start a drag
@@ -1159,13 +1179,14 @@
         	    infoPoints.textContent = clickPoints.join(" : ")
                 create_circle(e.offsetX, e.offsetY, randomColor());
         	    // if (clickPoints.length >= 5) drawPoly(clickPoints)
-                console.log(circles);
-                console.log("circles.length: " + circles.length);
-                console.log(listOfPolys);
-                console.log("listOfPolys.length: " + listOfPolys.length);
+                // console.log(circles);
+                // console.log("circles.length: " + circles.length);
+                // console.log(listOfPolys);
+                // console.log("listOfPolys.length: " + listOfPolys.length);
                 drawAll();
             } else {
-                draggingCircle = circles[hit];
+                draggingCircle = listOfCircles[hit[0]][hit[1]];
+                draggingPoly = listOfPolys[hit[0]][hit[1]];
                 isDown = true;
                 // console.log("In MouseDown, isDown: ", isDown);
             }
@@ -1213,6 +1234,8 @@
             // mousemove event
             draggingCircle.x += dx;
             draggingCircle.y += dy;
+            draggingPoly[0] += dx;
+            draggingPoly[1] += dy;
         
             // redraw all the circles
             drawAll();
@@ -1228,15 +1251,15 @@
             // alert("Hello");
             handleMouseDown(e);
         });
-        // $("#myCanvas2").mousemove(function (e) {
-        //     handleMouseMove(e);
-        // });
-        // $("#myCanvas2").mouseup(function (e) {
-        //     handleMouseUp(e);
-        // });
-        // $("#myCanvas2").mouseout(function (e) {
-        //     handleMouseUp(e);
-        // });
+        $("#myCanvas2").mousemove(function (e) {
+            handleMouseMove(e);
+        });
+        $("#myCanvas2").mouseup(function (e) {
+            handleMouseUp(e);
+        });
+        $("#myCanvas2").mouseout(function (e) {
+            handleMouseUp(e);
+        });
 
         // canvas.addEventListener("click", evt => {
         // 	// clickPoints.push([evt.offsetX, evt.offsetY])
@@ -1269,7 +1292,7 @@
         	
         	context.beginPath()
         	context.moveTo(split[0][0], split[0][1])
-        	for(i of split.reverse()) context.lineTo(i[0], i[1])
+        	for(i of split) context.lineTo(i[0], i[1])
         	context.stroke()
             // context.fillStyle = "blue"
             context.fillStyle = "rgba(0, 150, 0, 0.7)";
