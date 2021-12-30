@@ -998,7 +998,8 @@
             $.ajaxSetup({
                 async: false
             });
-            $.get("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) { // TODO: change to post
+            // Read about sending POST to Django here: https://stackoverflow.com/questions/6800894/django-returns-403-error-when-sending-a-post-request
+            $.post("{% url 'core:generatecircle' 8888888 9999999 %}".replace("8888888", x_center).replace("9999999", y_center), '', function(data) { // TODO: change to post
                 // Read about asynchronous in JQuery here: https://stackoverflow.com/questions/3222347/javascript-global-variables-after-ajax-requests
                 push_segmented_points_into_lists(data, randomColor());
             });
@@ -1065,7 +1066,6 @@
                     }
                 }
             }
-            console.log(hit);
         
             // if no hits then add a circle
             // if hit then set the isDown flag to start a drag
@@ -1190,8 +1190,6 @@
             // context.fillStyle = "blue"
             var color = points[0].color;
             context.fillStyle = color.replace('1)', '0.4)');
-            console.log(context.fillStyle)
-            console.log(points[0].color)
             // ctx.fillRect(0, 0, 870, 500)
             context.fill()
         }

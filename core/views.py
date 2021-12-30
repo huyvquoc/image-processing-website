@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt, csrf_protect, requires_csrf_token
 from django.views.generic.edit import FormView
 
 # local Django
@@ -305,6 +306,9 @@ def remove_background_image(
             'core/preprocess_image.html', 
             {'form': form})
 
+# Read about sending POST to Django here: https://stackoverflow.com/questions/6800894/django-returns-403-error-when-sending-a-post-request
+@csrf_exempt
+@requires_csrf_token
 def generate_circle(request, x, y):
     print('[**] In generate_circle, x: ', x)
     print('[**] In generate_circle, y: ', y)
