@@ -297,7 +297,7 @@ def remove_background_image(
             return render(
                 request, 
                 'core/preprocess_image.html', 
-                {'form': form, 'img_obj': img_obj, 'new_img_obj': new_img_obj})
+                {'form': form, 'img_obj': img_obj, 'new_img_obj_old': new_img_obj})
     else:
         form = ImageRemoveBackgroundForm()
 
@@ -326,3 +326,30 @@ def generate_circle(request, x, y):
         list_of_points.append((x + x_axes[i], y + y_axes[i]))
     print('[**] list_of_points: ', list_of_points)
     return HttpResponse(json.dumps(list_of_points), content_type="application/json")
+
+@csrf_exempt
+@requires_csrf_token
+def segment_regions(request):
+    '''
+      Receives an array of array ('listOfCircles') from frontend,
+      and use it to segment image regions. 
+      Then, send back the output image to the frontend (the right side)
+
+      Returns:
+      - HttpResponse that stores the output image
+    '''
+    list_of_polygons = json.loads(request.POST.get('list_of_polygons'))
+    print("[*] list_of_polygons: ", list_of_polygons)
+    for polygon in list_of_polygons:
+        print("- polygon: ", polygon)
+
+    for polygon in list_of_polygons:
+        for point in polygon:
+            print(point)
+    return HttpResponse('Success')
+    # output_img = 
+    # return render(
+    #     request,
+    #     '',
+    #     {'output_img', output_img}
+    # )

@@ -48,4 +48,9 @@ urlpatterns = [
         "generatecircle/<int:x>/<int:y>/",
         views.generate_circle,
         name="generatecircle"),
+    path(
+        "segmentregions/",
+        views.segment_regions,
+        name="segmentregions",
+    ),
 ]

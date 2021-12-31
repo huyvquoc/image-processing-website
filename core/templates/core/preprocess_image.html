@@ -1026,6 +1026,7 @@
 
         // ====== Draw all points and polygons =====
         function drawAll() {
+            // for input image (the left side)
             context.clearRect(0, 0, cw, ch);
             for (var i = 0; i < listOfCircles.length; i++) {
                 // 1) Draw points that construct a poly
@@ -1040,6 +1041,12 @@
                 // 2) Draw the poly
                 drawPoly(listOfCircles[i]);
             }
+            // for the output image (the right side)
+            $.ajax({
+                type: 'POST',
+                url: '/segmentregions/',
+                data: {'list_of_polygons': JSON.stringify(listOfCircles)},
+            });
         }
         
         function handleMouseDown(e) {
