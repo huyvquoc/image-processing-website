@@ -1120,8 +1120,12 @@
             // change the target circles position by the 
             // distance the mouse has moved since the last
             // mousemove event
-            draggingCircle.x += dx;
-            draggingCircle.y += dy;
+            if (draggingCircle.x + dx > 1 && draggingCircle.x + dx < cw) {
+                draggingCircle.x += dx;
+            }
+            if (draggingCircle.y + dy > 1 && draggingCircle.y + dy < ch) {
+                draggingCircle.y += dy;
+            }
         
             // redraw all the circles
             drawAll();
@@ -1201,10 +1205,14 @@
         const resize = (x, y) => {
         	// so that the biggest axis is always {biggest} px
         	var ratio = x > y ? x / biggest : y / biggest
-        	// axis = [x / ratio, y / ratio] // Replace this line with the below line for resizing the canvas
-            axis = [x, y]
+        	axis = [x / ratio, y / ratio] // Replace this line with the below line for resizing the canvas
+            // axis = [x, y]
         	canvas.height = axis[0]
         	canvas.width = axis[1]
+            ch = canvas.height
+            cw = canvas.width
+            console.log(x + " " + y)
+            console.log(ch + " " + cw)
         }
         
         // load a new image
