@@ -76,6 +76,58 @@ def convert_jpg_to_png(
         name=image.name)
     return new_image
 
+def crop_polygons(img_obj_url, list_of_polygons, height, width):
+    img = cv2.imread(img_obj_url)
+    img = cv2.resize(img, (width, height))
+    # pts = np.array([[10,150],[150,100],[300,150],[350,100],[310,20],[35,10]])
+    contours = []
+    for idx, polygon in enumerate(list_of_polygons):
+        contour = []
+        for point in polygon:
+            coordinate = [point["y"], point["x"]]
+            contour.append(coordinate)
+        # pts = np.array(pts)
+        contours.append(contour)
+        # print('pts ' + str(idx) + ': ', pts)
+    
+        ## (1) Crop the bounding rect
+        # rect = cv2.boundingRect(pts)
+        # x,y,w,h = rect
+        # croped = img[y:y+h, x:x+w].copy()
+        
+        ## (2) make mask
+        # pts = pts - pts.min(axis=0)
+        
+    contours = np.array(contours)
+    print(contours)
+    mask = np.zeros(img.shape[:2], np.uint8)
+    cv2.drawContours(mask, [contours], -1, (255, 255, 255), -1, cv2.LINE_AA)
+    
+    ## (3) do bit-op
+    dst = cv2.bitwise_and(img, img, mask=mask)
+    
+    ## (4) add the white background
+    # bg = np.ones_like(croped, np.uint8)*255
+    # cv2.bitwise_not(bg,bg, mask=mask)
+    # dst2 = bg+ dst
+    
+    
+    cv2.imwrite("input.png", img)
+    cv2.imwrite("mask.png", mask)
+    cv2.imwrite("dst.png", dst)
+    # cv2.imwrite("dst2.png", dst2)
+    dst = dst[:, :, ::-1].copy()
+    pil_dst = Image.fromarray(dst)
+    im_io = BytesIO()
+    pil_dst.save(
+        im_io, 
+        'JPEG')
+    new_image = File(
+        im_io, 
+        name="output_img.jpg")
+
+    return new_image
+
 def remove_background(
         image, blur, 
         canny_thresh_1, canny_thresh_2, 

@@ -27,7 +27,7 @@ from .forms import (
 from .image_processing_methods import (
     compress, trim,
     frame, convert_jpg_to_png, 
-    remove_background
+    crop_polygons, remove_background
 )
 # from .foreground_background_processing import (
 #     remove_background_cnn
@@ -262,6 +262,8 @@ def remove_background_image(
             request.POST, 
             request.FILES)
         print('[+] form: ', form)
+        print('[*] request.FILES: ', request.FILES)
+        # print('[*] form.Meta.model: ', form.Meta.model)
         if (form.is_valid()):
             # post_form = postForm.save(commit=False)
             # post_form.user = request.user
@@ -278,6 +280,7 @@ def remove_background_image(
             mask_color_r = form.cleaned_data['mask_color_r']
 
             img_obj = form.instance
+            print('[*] img_obj.image.url: ', img_obj.image.url)
             img_obj.save()
             ori_img = img_obj.image
             new_img = remove_background(
@@ -287,7 +290,7 @@ def remove_background_image(
                 (mask_color_b, mask_color_g, mask_color_r))
             # new_img = remove_background_cnn(ori_img)
             new_img_obj = Images(image=new_img)
-            new_img_obj.save()
+            # new_img_obj.save()
             print('[*] new_img_obj: ', dir(new_img_obj)) # Print the attributes of core.models.Images
             print('[*] new_img_obj.image: ', new_img_obj.image) # Print 
             print('[*] type(new_img_obj.image): ', type(new_img_obj.image)) # Print 
@@ -297,7 +300,7 @@ def remove_background_image(
             return render(
                 request, 
                 'core/preprocess_image.html', 
-                {'form': form, 'img_obj': img_obj, 'new_img_obj_old': new_img_obj})
+                {'form': form, 'img_obj': img_obj, 'new_img_obj': new_img_obj})
     else:
         form = ImageRemoveBackgroundForm()
 
@@ -339,17 +342,28 @@ def segment_regions(request):
       - HttpResponse that stores the output image
     '''
     list_of_polygons = json.loads(request.POST.get('list_of_polygons'))
+    img_obj_url = request.POST.get('img_obj_url')
+    img_obj_url = "".join([".", img_obj_url])
+    height = int(request.POST.get('height'))
+    width = int(request.POST.get('width'))
+    print('[*] height: ', height)
+    print('[*] width: ', width)
+
     print("[*] list_of_polygons: ", list_of_polygons)
     for polygon in list_of_polygons:
         print("- polygon: ", polygon)
 
-    for polygon in list_of_polygons:
-        for point in polygon:
-            print(point)
-    return HttpResponse('Success')
-    # output_img = 
-    # return render(
-    #     request,
-    #     '',
-    #     {'output_img', output_img}
-    # )
+    print("[*] img_obj_url: ", img_obj_url)
+    # for polygon in list_of_polygons:
+    #     for point in polygon:
+    #         print(point)
+    # return HttpResponse('Success')
+    output_img = crop_polygons(img_obj_url, list_of_polygons, height, width)
+    output_img = Images(image=output_img)
+    output_img.save()
+
+    return render(
+        request,
+        'core/preprocess_image.html',
+        {'out_img_obj': output_img}
+    )

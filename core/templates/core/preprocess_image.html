@@ -784,12 +784,23 @@
                 <!-- </div> -->
                 <canvas id="myCanvas" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: default;"></canvas>
             {% endif %}
-            {% if new_img_obj %}
+            <!-- {% if new_img_obj %}
                 <div>
                     <img src="{{ new_img_obj.image.url }}" alt="connect" style="max-height:300px">
                     <a  href="{{ new_img_obj.image.url }}" download>
                         <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                             <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+                            <span>Download</span>
+                        </button>
+                    </a>
+                </div>
+            {% endif %} -->
+            {% if out_img_obj %}
+                <div>
+                    <img src="{{ out_img_obj.image.url }}" alt="connect" style="max-height:300px">
+                    <a  href="{{ out_img_obj.image.url }}" download>
+                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                            <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ out_img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
                             <span>Download</span>
                         </button>
                     </a>
@@ -1045,7 +1056,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/segmentregions/',
-                data: {'list_of_polygons': JSON.stringify(listOfCircles)},
+                data: {'list_of_polygons': JSON.stringify(listOfCircles), 'img_obj_url': "{{img_obj.image.url}}", 'height': ch, 'width': cw},
             });
         }
         
