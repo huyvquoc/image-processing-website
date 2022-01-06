@@ -346,14 +346,14 @@ def segment_regions(request):
     img_obj_url = "".join([".", img_obj_url])
     height = int(request.POST.get('height'))
     width = int(request.POST.get('width'))
-    print('[*] height: ', height)
-    print('[*] width: ', width)
+    # print('[*] height: ', height)
+    # print('[*] width: ', width)
 
-    print("[*] list_of_polygons: ", list_of_polygons)
-    for polygon in list_of_polygons:
-        print("- polygon: ", polygon)
+    # print("[*] list_of_polygons: ", list_of_polygons)
+    # for polygon in list_of_polygons:
+    #     print("- polygon: ", polygon)
 
-    print("[*] img_obj_url: ", img_obj_url)
+    # print("[*] img_obj_url: ", img_obj_url)
     # for polygon in list_of_polygons:
     #     for point in polygon:
     #         print(point)
@@ -362,8 +362,20 @@ def segment_regions(request):
     output_img = Images(image=output_img)
     output_img.save()
 
-    return render(
-        request,
-        'core/preprocess_image.html',
-        {'out_img_obj': output_img}
-    )
+    print('[**] In segment_regions, output_img.image.url, type: ', output_img.image.url, type(output_img.image.url))
+
+    # response_data = {
+    #     'url': output_img.image.url,
+    # }
+    response_data = output_img.image.url
+    return HttpResponse(json.dumps(response_data))
+
+    # response = HttpResponse(content_type='image/jpg')
+    # output_img.save(response, "JPEG")
+    # return response
+
+    # return render(
+    #     request,
+    #     'core/preprocess_image.html',
+    #     {'out_img_obj': output_img}
+    # )

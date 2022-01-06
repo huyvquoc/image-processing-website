@@ -784,6 +784,7 @@
                 <!-- </div> -->
                 <canvas id="myCanvas" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: default;"></canvas>
             {% endif %}
+            <div id="displayOutImage">Output image: </div>
             <!-- {% if new_img_obj %}
                 <div>
                     <img src="{{ new_img_obj.image.url }}" alt="connect" style="max-height:300px">
@@ -795,7 +796,7 @@
                     </a>
                 </div>
             {% endif %} -->
-            {% if out_img_obj %}
+            <!-- {% if out_img_obj %}
                 <div>
                     <img src="{{ out_img_obj.image.url }}" alt="connect" style="max-height:300px">
                     <a  href="{{ out_img_obj.image.url }}" download>
@@ -805,10 +806,13 @@
                         </button>
                     </a>
                 </div>
-            {% endif %}
+            {% endif %} -->
         </div>
         <p id="demo"></p>
         <p class="points-info">No points yet</p>
+        <button id="btnInteractionComplete"  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+            Get output image
+        </button>
         <br>
 
         <div class="slide-show-box">
@@ -1053,11 +1057,11 @@
                 drawPoly(listOfCircles[i]);
             }
             // for the output image (the right side)
-            $.ajax({
-                type: 'POST',
-                url: '/segmentregions/',
-                data: {'list_of_polygons': JSON.stringify(listOfCircles), 'img_obj_url': "{{img_obj.image.url}}", 'height': ch, 'width': cw},
-            });
+            // $.ajax({
+            //     type: 'POST',
+            //     url: '/segmentregions/',
+            //     data: {'list_of_polygons': JSON.stringify(listOfCircles), 'img_obj_url': "{{img_obj.image.url}}", 'height': ch, 'width': cw},
+            // });
         }
         
         function handleMouseDown(e) {
@@ -1159,6 +1163,17 @@
             var color = "rgba(" + [r, g, b, 1.0].join(',') + ")";
             return color;
         }
+
+        // Display output cropped image
+        function display_output_image(image) {
+            console.log("Start display output image...");
+            // div = $('<div class="displayOutImage"><div></div></div><hr>');
+            console.log(image.url);
+            $('#displayOutImage').html("<img src=DUMMY />".replace(/DUMMY/, image));
+
+            // var $output = $('');
+            // $(status_div.childNodes[0]).text('%');
+        }
         
         // listen for mouse events
         $("#myCanvas").mousedown(function (e) {
@@ -1173,6 +1188,21 @@
         });
         $("#myCanvas").mouseout(function (e) {
             handleMouseUp(e);
+        });
+        $(document).ready(function() {
+            $("#btnInteractionComplete").click(function(){
+                // alert("button");
+                $.ajax({
+                    type: 'POST',
+                    url: '/segmentregions/',
+                    data: {'list_of_polygons': JSON.stringify(listOfCircles), 'img_obj_url': "{{img_obj.image.url}}", 'height': ch, 'width': cw},
+                    success: function(data) {
+                        console.log(data);
+                        console.log(typeof(data));
+                        display_output_image(data);
+                    }
+                });
+            });
         });
 
         // canvas.addEventListener("click", evt => {

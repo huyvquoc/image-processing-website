@@ -84,9 +84,10 @@ def crop_polygons(img_obj_url, list_of_polygons, height, width):
     for idx, polygon in enumerate(list_of_polygons):
         contour = []
         for point in polygon:
-            coordinate = [point["y"], point["x"]]
+            coordinate = [point["x"], point["y"]]
             contour.append(coordinate)
         # pts = np.array(pts)
+        contour = np.array(contour)
         contours.append(contour)
         # print('pts ' + str(idx) + ': ', pts)
     
@@ -98,10 +99,11 @@ def crop_polygons(img_obj_url, list_of_polygons, height, width):
         ## (2) make mask
         # pts = pts - pts.min(axis=0)
         
-    contours = np.array(contours)
-    print(contours)
+    # contours = np.array(contours)
+    # print('[**] In crop_polygons, contours.shape: ', contours.shape)
+    # print('[**] In crop_polygons, img.shape: ', img.shape)
     mask = np.zeros(img.shape[:2], np.uint8)
-    cv2.drawContours(mask, [contours], -1, (255, 255, 255), -1, cv2.LINE_AA)
+    cv2.drawContours(mask, contours, -1, 255, -1, cv2.LINE_AA)
     
     ## (3) do bit-op
     dst = cv2.bitwise_and(img, img, mask=mask)
@@ -112,9 +114,9 @@ def crop_polygons(img_obj_url, list_of_polygons, height, width):
     # dst2 = bg+ dst
     
     
-    cv2.imwrite("input.png", img)
-    cv2.imwrite("mask.png", mask)
-    cv2.imwrite("dst.png", dst)
+    # cv2.imwrite("input.png", img)
+    # cv2.imwrite("mask.png", mask)
+    # cv2.imwrite("dst.png", dst)
     # cv2.imwrite("dst2.png", dst2)
     dst = dst[:, :, ::-1].copy()
     pil_dst = Image.fromarray(dst)
