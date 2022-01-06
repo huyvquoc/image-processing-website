@@ -1169,8 +1169,18 @@
             console.log("Start display output image...");
             // div = $('<div class="displayOutImage"><div></div></div><hr>');
             console.log(image.url);
-            $('#displayOutImage').html("<img src=DUMMY />".replace(/DUMMY/, image));
+            // https://stackoverflow.com/questions/56608460/how-to-display-the-uploaded-image-using-django-and-ajax
+            $('#displayOutImage').html("<img src=DUMMY />".replace(/DUMMY/, image.url));
 
+            div = $('<a  href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>'.replace(/DUMMY/, image.url));
+            $('#displayOutImage').append(div);
+
+            // <a  href="{{ new_img_obj.image.url }}" download>
+            //     <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+            //         <svg class="fill-current w-4 h-4 mr-2" xmlns="{{ img_obj.image.url }}" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+            //         <span>Download</span>
+            //     </button>
+            // </a>
             // var $output = $('');
             // $(status_div.childNodes[0]).text('%');
         }

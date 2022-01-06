@@ -9,7 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, response
 from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.urls import reverse
@@ -364,11 +364,14 @@ def segment_regions(request):
 
     print('[**] In segment_regions, output_img.image.url, type: ', output_img.image.url, type(output_img.image.url))
 
-    # response_data = {
-    #     'url': output_img.image.url,
-    # }
-    response_data = output_img.image.url
-    return HttpResponse(json.dumps(response_data))
+    # https://stackoverflow.com/questions/56608460/how-to-display-the-uploaded-image-using-django-and-ajax
+    response_data = {
+        'url': output_img.image.url,
+    }
+    # https://stackoverflow.com/questions/2428092/creating-a-json-response-using-django-and-python
+    return JsonResponse(response_data)
+    # response_data = output_img.image.url
+    # return HttpResponse(json.dumps(response_data))
 
     # response = HttpResponse(content_type='image/jpg')
     # output_img.save(response, "JPEG")
