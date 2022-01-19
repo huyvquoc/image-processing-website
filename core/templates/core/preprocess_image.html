@@ -775,16 +775,21 @@
         </div>
         <br><br>
 
-        <h2 class="font-bold">Interactive tool</h2>
         <!-- <div class="grid grid-cols-2 gap-2 place-content-evenly" onmousemove="showCoords(event)" onmouseout="clearCoords()"> -->
-        <div class="grid grid-cols-2 gap-2 place-content-evenly">
+        <div class="grid grid-cols-1 gap-2 place-content-evenly">
             {% if img_obj %}
                 <!-- <div> -->
                     <!-- <img id="inp" src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px" ismap> -->
                 <!-- </div> -->
-                <canvas id="myCanvas" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: default;"></canvas>
+                <h2 class="mx-auto font-bold">Interactive tool - Click at regions which you want to segment out</h2>
+                <canvas id="myCanvas" class="mx-auto" width="320" height="240" style="display: inline-block;border:1px solid #d3d3d3;background-size: cover;cursor: default;"></canvas>
+                <p id="demo" class="mx-auto"></p>
+                <p class="points-info mx-auto"></p>
+                <button id="btnInteractionComplete"  class="mx-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded items-center">
+                    Get output image
+                </button>
             {% endif %}
-            <div id="displayOutImage">Output image: </div>
+            <!-- <div id="displayOutImage">Output image: </div> -->
             <!-- {% if new_img_obj %}
                 <div>
                     <img src="{{ new_img_obj.image.url }}" alt="connect" style="max-height:300px">
@@ -808,11 +813,13 @@
                 </div>
             {% endif %} -->
         </div>
-        <p id="demo"></p>
-        <p class="points-info">No points yet</p>
-        <button id="btnInteractionComplete"  class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-            Get output image
-        </button>
+        <!-- <div class="grid grid-cols-1 gap-2 place-content-center">
+            <p id="demo" class="mx-auto"></p>
+            <p class="points-info mx-auto"></p>
+            <button id="btnInteractionComplete"  class="mx-auto bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded items-center">
+                Get output image
+            </button>
+        </div> -->
         <br>
 
         <!--
@@ -1115,6 +1122,16 @@
           </div>
         </div>
 
+        <!-- <div class="grid grid-cols-3 gap-4">
+          <div class="...">01</div>
+          <div class="...">02</div>
+          <div class="...">03</div>
+          <div class="col-span-2 ...">04</div>
+          <div class="...">05</div>
+          <div class="...">06</div>
+          <div class="col-span-2 ...">07</div>
+        </div> -->
+
         <!--
           This example requires Tailwind CSS v2.0+ 
           
@@ -1131,13 +1148,67 @@
           }
           ```
         -->
-        <div class="bg-gray-300">
+        <div class="mt-6 space-y-1 space-x-5 lg:space-y-0 grid grid-cols-4 lg:gap-x-1">
+          <div class="group relative">
+            <!-- <div class="relative w-5 h-5 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"> -->
+            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="w-10 h-10 object-center object-cover">
+            <!-- </div> -->
+            <h3 class="mt-6 text-sm text-gray-500">
+              <a href="#">
+                <span class="absolute inset-0"></span>
+                Your Original Image
+              </a>
+            </h3>
+            <p class="text-base font-semibold text-gray-900">Upload it to our website</p>
+          </div>
+        
+          <div class="group relative">
+            <!-- <div class="relative w-5 h-5 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"> -->
+            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant." class="w-10 h-10 object-center object-cover">
+            <!-- </div> -->
+            <h3 class="mt-6 text-sm text-gray-500">
+              <a href="#">
+                <span class="absolute inset-0"></span>
+                New Image With Background Being Removed
+              </a>
+            </h3>
+            <p class="text-base font-semibold text-gray-900">An UI that you can click your desirable foreground regions, and our algorithm will automatically segment them for you</p>
+          </div>
+        
+          <div class="group relative">
+            <!-- <div class="relative w-5 h-5 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"> -->
+            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="w-10 h-10 object-center object-cover">
+            <!-- </div> -->
+            <h3 class="mt-6 text-sm text-gray-500">
+              <a href="#">
+                <span class="absolute inset-0"></span>
+                Adjust the bounding polygons
+              </a>
+            </h3>
+            <p class="text-base font-semibold text-gray-900">You can even modify the foregrounds for your perfection</p>
+          </div>
+
+          <div class="group relative">
+            <!-- <div class="relative w-5 h-5 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1"> -->
+            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="w-10 h-10 object-center object-cover">
+            <!-- </div> -->
+            <h3 class="mt-6 text-sm text-gray-500">
+              <a href="#">
+                <span class="absolute inset-0"></span>
+                Blend with a new background image
+              </a>
+            </h3>
+            <p class="text-base font-semibold text-gray-900">We provide you with some background images, but you can upload your background too</p>
+          </div>
+
+        </div>
+        <!-- <div class="bg-gray-300">
           <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-md mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">
               <h2 class="text-2xl font-extrabold text-gray-900">How to have a new background in your image</h2>
         
-              <div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-6">
-                <div class="group relative">
+              <div class="mt-6 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-4 lg:gap-x-2">
+                <div class="group relative col-start-1 col-span-1">
                   <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                     <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="w-full h-full object-center object-cover">
                   </div>
@@ -1150,7 +1221,7 @@
                   <p class="text-base font-semibold text-gray-900">Upload it to our website</p>
                 </div>
         
-                <div class="group relative">
+                <div class="group relative col-start-2 col-span-1">
                   <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                     <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant." class="w-full h-full object-center object-cover">
                   </div>
@@ -1163,7 +1234,7 @@
                   <p class="text-base font-semibold text-gray-900">An UI that you can click your desirable foreground regions, and our algorithm will automatically segment them for you</p>
                 </div>
         
-                <div class="group relative">
+                <div class="group relative col-start-3 col-span-1">
                   <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                     <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="w-full h-full object-center object-cover">
                   </div>
@@ -1176,7 +1247,7 @@
                   <p class="text-base font-semibold text-gray-900">You can even modify the foregrounds for your perfection</p>
                 </div>
 
-                <div class="group relative">
+                <div class="group relative col-start-4 col-span-1">
                   <div class="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                     <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg" alt="Collection of four insulated travel bottles on wooden shelf." class="w-full h-full object-center object-cover">
                   </div>
@@ -1192,7 +1263,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="slide-show-box">
             <h1>Photo Collection</h1>
@@ -1334,7 +1405,7 @@
         $("#myCanvas").on("click", function(event) {
             var x = event.pageX - this.offsetLeft;
             var y = event.pageY - this.offsetTop;
-            var coor = "X coords: " + x + ", Y coords: " + y;
+            var coor = "The most recent center point (x, y): (" + x + ", " + y + ")";
             document.getElementById("demo").innerHTML = coor;
             // alert("X coordinate: " + x + ", Y coordinate: " + y);
         });
@@ -1471,10 +1542,11 @@
             // if no hits then add a circle
             // if hit then set the isDown flag to start a drag
             if (hit < 0) {
-        	    clickPoints.push([e.offsetX, e.offsetY])
+        	    clickPoints.push("(" + e.offsetX + ", " + e.offsetY + ")")
         	    // drawDot(e.offsetX, e.offsetY)
-        	    infoPoints.textContent = clickPoints.join(" : ")
-                create_circle(e.offsetX, e.offsetY);
+              let tmp_text = "List of center points (x, y): ";
+        	    infoPoints.textContent = tmp_text.concat(clickPoints.join("; "));
+              create_circle(e.offsetX, e.offsetY);
         	    // if (clickPoints.length >= 5) drawPoly(clickPoints)
                 drawAll();
             } else {
@@ -1549,10 +1621,10 @@
             // div = $('<div class="displayOutImage"><div></div></div><hr>');
             console.log(image.url);
             // https://stackoverflow.com/questions/56608460/how-to-display-the-uploaded-image-using-django-and-ajax
-            $('#displayOutImage').html("<img src=DUMMY />".replace(/DUMMY/, image.url));
+            // $('#displayOutImage').html("<img src=DUMMY />".replace(/DUMMY/, image.url));
 
-            div = $('<a  href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>'.replace(/DUMMY/, image.url));
-            $('#displayOutImage').append(div);
+            // div = $('<a  href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>'.replace(/DUMMY/, image.url));
+            // $('#displayOutImage').append(div);
 
             // <a  href="{{ new_img_obj.image.url }}" download>
             //     <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
