@@ -880,7 +880,7 @@
                 </button>
         
                 <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
-                  <div class="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
+                  <div class="rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
                     <img id="outImage" src="" alt="Two each of gray, white, and black shirts arranged on table." class="object-center object-cover">
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
@@ -901,17 +901,81 @@
                       <h3 id="options-heading" class="sr-only">Product options</h3>
         
                       <form>
+                        <!-- Sizes -->
+                        <div class="mt-10">
+                          <div class="flex items-center justify-between">
+                            <h4 class="text-sm text-indigo-700 font-medium">Type of customization</h4>
+                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
+                          </div>
+        
+                          <fieldset class="mt-4">
+                            <legend class="sr-only">
+                              Choose a size
+                            </legend>
+                            <!-- <div class="grid grid-cols-4 gap-4"> -->
+                            <div class="flex items-center space-x-3">
+                              <!-- Active: "ring-2 ring-indigo-500" -->
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="ct-radio-1" type="radio" name="customization-radio" value="remove-background" checked>
+                              <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:border-gray-900 sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer" for"ct-radio-1"> -->
+                              <label class="flex flex-col p-4 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="ct-radio-1">
+                                <p id="size-choice-0-label">
+                                  Remove background
+                                </p>
+        
+                                <!--
+                                  Active: "border", Not Active: "border-2"
+                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                -->
+                                <!-- <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div> -->
+                              </label>
+        
+                              <!-- Active: "ring-2 ring-indigo-500" -->
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="ct-radio-2" type="radio" name="customization-radio" value="grayscale-background">
+                              <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:border-gray-900 sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer" for"ct-radio-2"> -->
+                              <label class="flex flex-col p-4 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="ct-radio-2">
+                                <p id="size-choice-1-label">
+                                  Grayscale background
+                                </p>
+        
+                                <!--
+                                  Active: "border", Not Active: "border-2"
+                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                -->
+                                <!-- <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div> -->
+                              </label>
+        
+                              <!-- Active: "ring-2 ring-indigo-500" -->
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="ct-radio-3" type="radio" name="customization-radio" value="new-background">
+                              <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:border-gray-900 sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer" for"ct-radio-3"> -->
+                              <label class="flex flex-col p-4 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="ct-radio-3">
+                                <p id="size-choice-2-label">
+                                  Add new background
+                                </p>
+        
+                                <!--
+                                  Active: "border", Not Active: "border-2"
+                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                -->
+                                <!-- <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div> -->
+                              </label>
+        
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <br>
+
                         <!-- Colors -->
                         <div>
-                          <h4 class="text-sm text-gray-900 font-medium">Background image</h4>
+                          <h4 class="text-sm text-indigo-700 font-medium">Background image</h4>
         
                           <fieldset class="mt-4">
                             <legend class="sr-only">
                               Choose a background image
                             </legend>
                             <div class="flex items-center space-x-3">
-                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_1" type="radio" name="radio" value="White" checked>
-                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_1">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="bg-radio-1" type="radio" name="background-radio" value="White" checked>
+                              <label class="flex flex-col p-2 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="bg-radio-1">
                                 <!-- <p id="color-choice-0-label" class="sr-only">
                                   White
                                 </p>
@@ -922,13 +986,11 @@
                                   <li>Thing 1</li>
                                   <li>Thing 2</li>
                                 </ul> -->
-                                <img src="../../../static/sea/sea1.jpg" alt="sea1" class="w-959 h-640 object-center object-cover">
+                                <img src="../../../static/sea/sea1.jpg" alt="sea1" class="w-500 h-320 object-center object-cover">
                               </label>
-                            </div>
         
-                            <div class="flex items-center space-x-3">
-                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_2" type="radio" name="radio" value="Gray">
-                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_2">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="bg-radio-2" type="radio" name="background-radio" value="Gray">
+                              <label class="flex flex-col p-2 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="bg-radio-2">
                                 <!-- <p id="color-choice-1-label" class="sr-only">
                                   Gray
                                 </p>
@@ -939,13 +1001,11 @@
                                   <li>Thing 1</li>
                                   <li>Thing 2</li>
                                 </ul> -->
-                                <img src="../../../static/sea/sea2.jpg" alt="sea2" class="w-959 h-640 object-center object-cover">
+                                <img src="../../../static/sea/sea2.jpg" alt="sea2" class="w-500 h-640 object-center object-cover">
                               </label>
-                            </div>
         
-                            <div class="flex items-center space-x-3">
-                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_3" type="radio" name="radio" value="Black">
-                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_3">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="bg-radio-3" type="radio" name="background-radio" value="Black">
+                              <label class="flex flex-col p-2 border-2 rounded-md cursor-pointer focus:border-gray-900 border-gray-400" for="bg-radio-3">
                                 <!-- <p id="color-choice-2-label" class="sr-only">
                                   Black
                                 </p>
@@ -961,133 +1021,8 @@
                             </div>
                           </fieldset>
                         </div>
-        
-                        <!-- Sizes -->
-                        <div class="mt-10">
-                          <div class="flex items-center justify-between">
-                            <h4 class="text-sm text-gray-900 font-medium">Size</h4>
-                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size guide</a>
-                          </div>
-        
-                          <fieldset class="mt-4">
-                            <legend class="sr-only">
-                              Choose a size
-                            </legend>
-                            <div class="grid grid-cols-4 gap-4">
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="XXS" class="sr-only" aria-labelledby="size-choice-0-label">
-                                <p id="size-choice-0-label">
-                                  XXS
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="XS" class="sr-only" aria-labelledby="size-choice-1-label">
-                                <p id="size-choice-1-label">
-                                  XS
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="S" class="sr-only" aria-labelledby="size-choice-2-label">
-                                <p id="size-choice-2-label">
-                                  S
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="M" class="sr-only" aria-labelledby="size-choice-3-label">
-                                <p id="size-choice-3-label">
-                                  M
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="L" class="sr-only" aria-labelledby="size-choice-4-label">
-                                <p id="size-choice-4-label">
-                                  L
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="XL" class="sr-only" aria-labelledby="size-choice-5-label">
-                                <p id="size-choice-5-label">
-                                  XL
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                                <input type="radio" name="size-choice" value="XXL" class="sr-only" aria-labelledby="size-choice-6-label">
-                                <p id="size-choice-6-label">
-                                  XXL
-                                </p>
-        
-                                <!--
-                                  Active: "border", Not Active: "border-2"
-                                  Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                -->
-                                <div class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></div>
-                              </label>
-        
-                              <!-- Active: "ring-2 ring-indigo-500" -->
-                              <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-gray-50 text-gray-200 cursor-not-allowed">
-                                <input type="radio" name="size-choice" value="XXXL" disabled class="sr-only" aria-labelledby="size-choice-7-label">
-                                <p id="size-choice-7-label">
-                                  XXXL
-                                </p>
-        
-                                <div aria-hidden="true" class="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none">
-                                  <svg class="absolute inset-0 w-full h-full text-gray-200 stroke-2" viewBox="0 0 100 100" preserveAspectRatio="none" stroke="currentColor">
-                                    <line x1="0" y1="100" x2="100" y2="0" vector-effect="non-scaling-stroke" />
-                                  </svg>
-                                </div>
-                              </label>
-                            </div>
-                          </fieldset>
-                        </div>
+
+                        <br>
         
                         <!-- <button type="submit" class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to bag</button> -->
                         <a  id="overlayOutImageButton" href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>
