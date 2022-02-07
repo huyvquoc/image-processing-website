@@ -648,6 +648,10 @@
             .slide-show-box h1 {
                 font-family: 'Ephesis', cursive;
             }
+            input[type="radio"]:checked + label {
+              border-color: black;
+              box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
         </style>
         <link href="../../../theme/static_src/src/styles.css" rel="stylesheet">
         <link href="../../../theme/static/css/dist/styles.css" rel="stylesheet">
@@ -877,7 +881,7 @@
         
                 <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
                   <div class="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
-                    <img src="" alt="Two each of gray, white, and black shirts arranged on table." class="object-center object-cover">
+                    <img id="outImage" src="" alt="Two each of gray, white, and black shirts arranged on table." class="object-center object-cover">
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
                     <h2 class="text-2xl font-extrabold text-gray-900 sm:pr-12">
@@ -899,47 +903,60 @@
                       <form>
                         <!-- Colors -->
                         <div>
-                          <h4 class="text-sm text-gray-900 font-medium">Color</h4>
+                          <h4 class="text-sm text-gray-900 font-medium">Background image</h4>
         
                           <fieldset class="mt-4">
                             <legend class="sr-only">
-                              Choose a color
+                              Choose a background image
                             </legend>
                             <div class="flex items-center space-x-3">
-                              <!--
-                                Active and Checked: "ring ring-offset-1"
-                                Not Active and Checked: "ring-2"
-                              -->
-                              <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
-                                <input type="radio" name="color-choice" value="White" class="sr-only" aria-labelledby="color-choice-0-label">
-                                <p id="color-choice-0-label" class="sr-only">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_1" type="radio" name="radio" value="White" checked>
+                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_1">
+                                <!-- <p id="color-choice-0-label" class="sr-only">
                                   White
                                 </p>
-                                <span aria-hidden="true" class="h-8 w-8 bg-white border border-black border-opacity-10 rounded-full"></span>
+                                <span aria-hidden="true" class="h-8 w-8 bg-white border border-black border-opacity-10 rounded-full"></span> -->
+                                <!-- <span class="text-xs font-semibold uppercase">Small</span>
+                                <span class="text-xl font-bold mt-2">$10/mo</span>
+                                <ul class="text-sm mt-2">
+                                  <li>Thing 1</li>
+                                  <li>Thing 2</li>
+                                </ul> -->
+                                <img src="../../../static/sea/sea1.jpg" alt="sea1" class="w-959 h-640 object-center object-cover">
                               </label>
+                            </div>
         
-                              <!--
-                                Active and Checked: "ring ring-offset-1"
-                                Not Active and Checked: "ring-2"
-                              -->
-                              <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-400">
-                                <input type="radio" name="color-choice" value="Gray" class="sr-only" aria-labelledby="color-choice-1-label">
-                                <p id="color-choice-1-label" class="sr-only">
+                            <div class="flex items-center space-x-3">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_2" type="radio" name="radio" value="Gray">
+                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_2">
+                                <!-- <p id="color-choice-1-label" class="sr-only">
                                   Gray
                                 </p>
-                                <span aria-hidden="true" class="h-8 w-8 bg-gray-200 border border-black border-opacity-10 rounded-full"></span>
+                                <span aria-hidden="true" class="h-8 w-8 bg-gray-200 border border-black border-opacity-10 rounded-full"></span> -->
+                                <!-- <span class="text-xs font-semibold uppercase">Medium</span>
+                                <span class="text-xl font-bold mt-2">$40/mo</span>
+                                <ul class="text-sm mt-2">
+                                  <li>Thing 1</li>
+                                  <li>Thing 2</li>
+                                </ul> -->
+                                <img src="../../../static/sea/sea2.jpg" alt="sea2" class="w-959 h-640 object-center object-cover">
                               </label>
+                            </div>
         
-                              <!--
-                                Active and Checked: "ring ring-offset-1"
-                                Not Active and Checked: "ring-2"
-                              -->
-                              <label class="-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none ring-gray-900">
-                                <input type="radio" name="color-choice" value="Black" class="sr-only" aria-labelledby="color-choice-2-label">
-                                <p id="color-choice-2-label" class="sr-only">
+                            <div class="flex items-center space-x-3">
+                              <input class="w-4 h-4 border-gray-300 focus:ring-2 focus:outline-black" id="radio_3" type="radio" name="radio" value="Black">
+                              <label class="flex flex-col p-4 border-2 cursor-pointer focus:border-gray-900 border-gray-400" for="radio_3">
+                                <!-- <p id="color-choice-2-label" class="sr-only">
                                   Black
                                 </p>
-                                <span aria-hidden="true" class="h-8 w-8 bg-gray-900 border border-black border-opacity-10 rounded-full"></span>
+                                <span aria-hidden="true" class="h-8 w-8 bg-gray-900 border border-black border-opacity-10 rounded-full"></span> -->
+                                <!-- <span class="text-xs font-semibold uppercase">Big</span>
+                                <span class="text-xl font-bold mt-2">$100/mo</span>
+                                <ul class="text-sm mt-2">
+                                  <li>Thing 1</li>
+                                  <li>Thing 2</li>
+                                </ul> -->
+                                <img src="../../../static/sea/sea3.jpeg" alt="sea3" class="w-959 h-640 object-center object-cover">
                               </label>
                             </div>
                           </fieldset>
@@ -1597,7 +1614,7 @@
             // var $output = $('');
             // $(status_div.childNodes[0]).text('%');
 
-            $('#overlayOutImage').find('img').attr("src", image.url);
+            $('#overlayOutImage').find('img#outImage').attr("src", image.url);
             $('#overlayOutImage').css("visibility", "visible");
             $('#overlayOutImageButton').attr("href", image.url);
             $('#overlayOutImageButton').find('span').attr("xmlns", image.url);
