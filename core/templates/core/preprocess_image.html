@@ -882,6 +882,7 @@
                 <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
                   <div class="rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
                     <img id="outImage" src="" alt="Two each of gray, white, and black shirts arranged on table." class="object-center object-cover">
+                    <a  id="overlayOutImageButton" href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
                     <h2 class="text-2xl font-extrabold text-gray-900 sm:pr-12">
@@ -900,7 +901,7 @@
                     <section aria-labelledby="options-heading" class="mt-10">
                       <h3 id="options-heading" class="sr-only">Product options</h3>
         
-                      <form>
+                      <form id="uniform1">
                         <!-- Sizes -->
                         <div class="mt-10">
                           <div class="flex items-center justify-between">
@@ -1024,8 +1025,7 @@
 
                         <br>
         
-                        <!-- <button type="submit" class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to bag</button> -->
-                        <a  id="overlayOutImageButton" href=DUMMY download><button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><svg class="fill-current w-4 h-4 mr-2" xmlns=DUMMY viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg><span>Download</span></button></a>
+                        <button type="submit" class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Take effect</button>
 
                       </form>
                     </section>
@@ -1671,6 +1671,24 @@
         // 	zoomWindow.position.top = x + "px"
         // }
 
+    </script>
+
+    <script>
+      $(document).on('submit', 'form#uniform1', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '/segmentregions/',
+            // TODO: Send type of customization and background image to data
+            data: {'list_of_polygons': JSON.stringify(listOfCircles), 'img_obj_url': "{{img_obj.image.url}}", 'height': ch, 'width': cw},
+            success: function(data) {
+                console.log(data);
+                console.log(typeof(data));
+                display_output_image(data);
+            }
+        });
+      });
     </script>
 
     </body>
