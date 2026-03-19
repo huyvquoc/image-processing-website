@@ -1,5 +1,6 @@
-# pixm-web
+# Interactive Image Processing Web App
 
+A pilot project where I learned to build a full-stack interactive image processing web application — from frontend to deployment — using **HTML, TailwindCSS, JavaScript, Django, PostgreSQL, Docker, and Heroku**.
 
 ## Local deployment
 
